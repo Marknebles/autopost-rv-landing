@@ -138,6 +138,17 @@
     padding: 1px 7px; border-radius: 6px;
   }
 
+  .requirement { margin: 20px auto 0; }
+  .requirement .rq {
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--accent-soft); border:1px solid var(--border-2);
+    color: var(--text); padding: 9px 15px; border-radius: 999px;
+    font-weight: 500; font-size: 13.5px;
+  }
+  .requirement a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .requirement a:hover { text-decoration: underline; }
+  .requirement .note { margin-top: 8px; color: var(--faint); font-size: 12.5px; }
+
   /* ---------- features ---------- */
   .features {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
@@ -214,6 +225,11 @@
             <small>กำลังพัฒนาเวอร์ชัน Mac</small>
           </span>
         </span>
+      </div>
+
+      <div class="requirement reveal d5">
+        <span class="rq">⚙️ ต้องมี <a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Google Chrome</a> ติดตั้งในเครื่อง</span>
+        <div class="note">โปรแกรมใช้ Google Chrome ในการเปิด Facebook — ถ้ายังไม่มี ติดตั้งฟรีก่อนใช้งาน</div>
       </div>
 
       <div class="install-hint reveal d5">
