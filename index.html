@@ -1,288 +1,739 @@
 <!doctype html>
 <html lang="th">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AutoPost RV</title>
-<meta name="description" content="AutoPost RV — โปรแกรมโพสต์ประกาศเข้ากลุ่ม Facebook อัตโนมัติ สำหรับงานอสังหาริมทรัพย์ (Windows)" />
-<link rel="icon" href="./logo.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" />
-<style>
-  /* ---- ธีมเดียว (dark) ตามโลโก้ — ทาสีพื้น/สีทุกจุดชัดเจน ---- */
-  :root {
-    --bg:        #08111f;
-    --bg-2:      #0c1a30;
-    --surface:   #101f3b;
-    --surface-2: #142744;
-    --border:    rgba(122,164,224,.16);
-    --border-2:  rgba(122,164,224,.28);
-    --accent:    #3aa5ff;
-    --accent-2:  #1f6ae0;
-    --accent-soft: rgba(58,165,255,.16);
-    --glow:      rgba(58,165,255,.40);
-    --text:      #eef4fd;
-    --muted:     #9db1d2;
-    --faint:     #6c82a6;
-    --good:      #46d6a0;
-    --font-display: "Anuphan", "IBM Plex Sans Thai", system-ui, sans-serif;
-    --font-body:    "IBM Plex Sans Thai", system-ui, -apple-system, sans-serif;
-    --maxw: 940px;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม</title>
+  <meta name="description" content="AutoPost RV ช่วยจัดการการโพสต์ประกาศเข้า Facebook Group หลายกลุ่มจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows" />
+  <link rel="icon" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --paper:#ffffff;
+      --ink:#10213a;
+      --muted:#65758d;
+      --line:#e6ebf2;
+      --blue:#1677ff;
+      --blue2:#0b5fd7;
+      --blueSoft:#eef6ff;
+      --green:#16a66a;
+      --greenSoft:#edf9f4;
+      --amber:#b77a00;
+      --amberSoft:#fff8e7;
+      --shadow:0 20px 50px rgba(16,33,58,.08);
+      --shadow2:0 10px 28px rgba(16,33,58,.07);
+      --max:1180px;
+      --display:"Anuphan","IBM Plex Sans Thai",system-ui,sans-serif;
+      --body:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
+    }
 
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    font-family: var(--font-body);
-    color: var(--text);
-    background:
-      radial-gradient(1100px 620px at 50% -8%, rgba(58,165,255,.20), transparent 60%),
-      radial-gradient(800px 500px at 88% 8%, rgba(31,106,224,.14), transparent 55%),
-      linear-gradient(180deg, var(--bg-2), var(--bg) 42%);
-    background-color: var(--bg);
-    min-height: 100vh;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(800px 420px at 85% -5%, rgba(22,119,255,.10), transparent 60%),
+        linear-gradient(180deg,#fbfdff 0,#f7f9fc 100%);
+      font-family:var(--body);
+      line-height:1.65;
+    }
 
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    a{color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
 
-  /* ---------- topbar ---------- */
-  .topbar {
-    display: flex; align-items: center; gap: 12px;
-    padding: 22px 0 8px;
-  }
-  .topbar img { width: 34px; height: 34px; border-radius: 50%; }
-  .topbar .name { font-family: var(--font-display); font-weight: 700; letter-spacing: .2px; font-size: 17px; }
-  .topbar .name span { color: var(--accent); }
+    .nav{
+      height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font:700 20px var(--display)}
+    .brand img{width:40px;height:40px;border-radius:50%}
+    .brand span{color:var(--blue)}
+    .navlinks{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
+    .navlinks a{text-decoration:none}
+    .navcta{
+      color:#fff !important;
+      background:var(--blue);
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:700;
+      box-shadow:0 8px 20px rgba(22,119,255,.18)
+    }
 
-  /* ---------- hero ---------- */
-  .hero { text-align: center; padding: 46px 0 30px; }
+    .hero{
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      gap:64px;
+      align-items:center;
+      padding:64px 0 84px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--green);
+      background:var(--greenSoft);
+      border:1px solid #d5f0e4;
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+    h1{
+      margin:0 0 18px;
+      font:700 clamp(42px,5.6vw,70px)/1.08 var(--display);
+      letter-spacing:-1.4px;
+    }
+    h1 .accent{color:var(--blue)}
+    .lead{
+      margin:0 0 10px;
+      font:500 clamp(20px,2.2vw,25px)/1.5 var(--display);
+      max-width:700px;
+    }
+    .sub{
+      margin:0 0 28px;
+      color:var(--muted);
+      font-size:16px;
+      max-width:660px;
+    }
+    .ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:52px;
+      padding:0 22px;
+      border-radius:12px;
+      text-decoration:none;
+      font:700 15px var(--display);
+      transition:.18s ease;
+      border:1px solid var(--line);
+    }
+    .btn.primary{
+      color:#fff;
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      box-shadow:0 12px 28px rgba(22,119,255,.24);
+    }
+    .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(22,119,255,.30)}
+    .btn.secondary{background:#fff;color:var(--ink)}
+    .micro{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted)
+    }
+    .micro b{color:var(--green)}
 
-  .logo-badge {
-    position: relative; width: 168px; height: 168px; margin: 0 auto 26px;
-    display: grid; place-items: center;
-  }
-  .logo-badge::before {
-    content: ""; position: absolute; inset: -12%;
-    background: radial-gradient(circle, var(--glow), transparent 68%);
-    filter: blur(6px); z-index: 0;
-    animation: pulse 5.5s ease-in-out infinite;
-  }
-  .logo-badge img {
-    position: relative; z-index: 1; width: 100%; height: 100%;
-    border-radius: 50%;
-    box-shadow: 0 18px 50px rgba(3,10,22,.6), 0 0 0 1px rgba(122,164,224,.12);
-  }
-  @keyframes pulse { 0%,100% { opacity:.55; transform: scale(1);} 50% { opacity:.95; transform: scale(1.05);} }
+    .product-shell{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .windowbar{
+      height:42px;
+      background:#f4f7fb;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      gap:7px;
+      padding:0 14px;
+    }
+    .dot{width:10px;height:10px;border-radius:50%;background:#d7dee9}
+    .windowtitle{margin-left:7px;color:#77869b;font-size:11px;font-weight:600}
+    .product-shot{
+      display:block;
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:cover;
+      object-position:top center;
+      background:#eef2f8;
+    }
+    .app{
+      display:grid;
+      grid-template-columns:170px 1fr;
+      min-height:430px;
+    }
+    .sidebar{
+      background:#10213a;
+      color:#dfe8f5;
+      padding:20px 14px;
+    }
+    .sidebrand{
+      display:flex;align-items:center;gap:9px;
+      font-weight:700;margin-bottom:24px
+    }
+    .sidebrand img{width:30px;height:30px;border-radius:50%}
+    .sideitem{
+      padding:10px 11px;border-radius:9px;font-size:13px;color:#b7c5d9;margin-bottom:6px
+    }
+    .sideitem.active{background:#1f3b63;color:#fff}
+    .canvas{padding:20px;background:#fbfdff}
+    .canvas-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+    .canvas h3{margin:0;font:700 20px var(--display)}
+    .canvas p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .small-btn{background:var(--blue);color:#fff;border-radius:8px;padding:8px 11px;font-size:12px;font-weight:700}
+    .job{
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#fff;
+      padding:14px;
+      margin-bottom:11px;
+      box-shadow:0 4px 14px rgba(16,33,58,.03)
+    }
+    .jobtop{display:flex;justify-content:space-between;gap:10px}
+    .jobtitle{font-weight:700;font-size:14px}
+    .status{
+      color:var(--green);
+      background:var(--greenSoft);
+      border-radius:999px;
+      padding:3px 8px;
+      font-size:11px;font-weight:700
+    }
+    .groupname{margin-top:4px;color:var(--muted);font-size:12px}
+    .progress{height:7px;background:#edf1f6;border-radius:999px;overflow:hidden;margin-top:10px}
+    .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#3bbcff)}
+    .stats{display:flex;justify-content:space-between;color:#8090a7;font-size:11px;margin-top:6px}
 
-  .eyebrow {
-    font-size: 12.5px; letter-spacing: 2.4px; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 14px;
-  }
-  h1 {
-    font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(38px, 7vw, 64px); line-height: 1.02; margin: 0 0 16px;
-    letter-spacing: -.5px; text-wrap: balance;
-  }
-  h1 .rv { color: var(--accent); }
-  .tagline {
-    font-size: clamp(17px, 2.6vw, 21px); color: var(--text); font-weight: 500;
-    margin: 0 auto 10px; max-width: 30ch; text-wrap: balance;
-  }
-  .sub {
-    font-size: 15.5px; color: var(--muted); margin: 0 auto 34px;
-    max-width: 46ch; font-weight: 300;
-  }
+    .trustbar{
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:#fff;
+    }
+    .trustitems{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      padding:18px 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .trustitems b{color:var(--ink)}
 
-  /* ---------- download buttons ---------- */
-  .downloads { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: stretch; }
-  .btn {
-    display: flex; align-items: center; gap: 13px;
-    padding: 15px 26px; border-radius: 15px; text-decoration: none;
-    font-family: var(--font-display); font-weight: 600; font-size: 16px;
-    border: 1px solid transparent; transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-    color: #fff;
-  }
-  .btn .ico { font-size: 22px; line-height: 1; }
-  .btn .lines { text-align: left; line-height: 1.15; }
-  .btn .lines small { display: block; font-family: var(--font-body); font-weight: 400; font-size: 11.5px; opacity: .8; margin-top: 2px; }
+    section{padding:82px 0}
+    .section-head{text-align:center;max-width:760px;margin:0 auto 38px}
+    .section-head .kicker{color:var(--blue);font-weight:700;font-size:13px;letter-spacing:.3px}
+    .section-head h2{margin:8px 0 10px;font:700 clamp(30px,4vw,46px)/1.2 var(--display)}
+    .section-head p{margin:0;color:var(--muted)}
 
-  .btn-win {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 12px 30px rgba(31,106,224,.42);
-  }
-  .btn-win:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(31,106,224,.55); }
-  .btn-win:focus-visible { outline: 3px solid #bfe0ff; outline-offset: 3px; }
+    .beforeafter{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+    .ba{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:28px;
+      box-shadow:var(--shadow2);
+    }
+    .ba.before{border-top:4px solid #c8d1df}
+    .ba.after{border-top:4px solid var(--blue)}
+    .ba-label{
+      font-size:12px;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;margin-bottom:14px
+    }
+    .before .ba-label{color:#73839a}
+    .after .ba-label{color:var(--blue)}
+    .timeline{display:grid;gap:10px}
+    .timeitem{
+      display:grid;grid-template-columns:70px 1fr;gap:12px;
+      padding:10px 0;border-bottom:1px solid #f0f3f7
+    }
+    .timeitem:last-child{border-bottom:none}
+    .time{font-weight:700;color:#7a8aa1}
+    .task{color:var(--muted)}
+    .task b{color:var(--ink)}
 
-  .btn-mac {
-    background: var(--surface); color: var(--muted);
-    border-color: var(--border); cursor: not-allowed;
-  }
-  .btn-mac .soon {
-    font-family: var(--font-body); font-size: 11px; font-weight: 600;
-    color: var(--accent); background: var(--accent-soft);
-    padding: 2px 9px; border-radius: 999px; margin-left: 2px;
-  }
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:24px;
+      box-shadow:var(--shadow2);
+    }
+    .card .icon{
+      width:46px;height:46px;display:grid;place-items:center;
+      border-radius:12px;background:var(--blueSoft);
+      font-size:22px;margin-bottom:16px
+    }
+    .card h3{margin:0 0 8px;font:600 18px var(--display)}
+    .card p{margin:0;color:var(--muted);font-size:14px}
 
-  .install-hint {
-    margin: 24px auto 0; font-size: 13px; color: var(--faint);
-    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
-  }
-  .install-hint b { color: var(--muted); font-weight: 600; }
-  .kbd {
-    font-family: var(--font-body); font-size: 12px; color: var(--text);
-    background: var(--surface-2); border: 1px solid var(--border);
-    padding: 1px 7px; border-radius: 6px;
-  }
+    .demo{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:42px;
+      align-items:center;
+      background:#0f213b;
+      border-radius:24px;
+      padding:34px;
+      color:#fff;
+    }
+    .video-placeholder{
+      min-height:360px;
+      border-radius:18px;
+      background:
+        linear-gradient(rgba(8,18,33,.25),rgba(8,18,33,.25)),
+        radial-gradient(circle at 70% 30%,#2e5c95 0,#18345b 40%,#0b1a30 100%);
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .video-placeholder iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .video-fallback{
+      display:grid;
+      justify-items:center;
+      gap:14px;
+      color:#dbe8f7;
+      text-align:center;
+      padding:28px;
+    }
+    .video-fallback small{color:#9fb3cc;font-size:13px}
+    .play{
+      width:78px;height:78px;border-radius:50%;
+      background:#fff;color:var(--blue);
+      display:grid;place-items:center;
+      font-size:28px;
+      box-shadow:0 16px 40px rgba(0,0,0,.28)
+    }
+    .democopy .kicker{color:#6dc3ff;font-size:13px;font-weight:700}
+    .democopy h2{font:700 clamp(30px,4vw,44px)/1.2 var(--display);margin:10px 0 14px}
+    .democopy p{color:#bac8da;margin:0 0 18px}
+    .checklist{display:grid;gap:10px}
+    .check{display:flex;gap:10px;color:#e7eef8;font-size:14px}
+    .check span:first-child{color:#6ee7b7}
 
-  .requirement { margin: 20px auto 0; }
-  .requirement .rq {
-    display:inline-flex; align-items:center; gap:8px;
-    background: var(--accent-soft); border:1px solid var(--border-2);
-    color: var(--text); padding: 9px 15px; border-radius: 999px;
-    font-weight: 500; font-size: 13.5px;
-  }
-  .requirement a { color: var(--accent); font-weight: 600; text-decoration: none; }
-  .requirement a:hover { text-decoration: underline; }
-  .requirement .note { margin-top: 8px; color: var(--faint); font-size: 12.5px; }
+    .proof{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .trust-box,.review-box{
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow2)
+    }
+    .trust-box h3,.review-box h3{margin:0 0 8px;font:700 22px var(--display)}
+    .trust-box p,.review-box p{color:var(--muted);font-size:14px}
+    .company{
+      display:flex;align-items:center;gap:14px;
+      padding:16px;border:1px solid var(--line);border-radius:14px;margin-top:16px
+    }
+    .company-logo{
+      width:48px;height:48px;border-radius:12px;
+      display:grid;place-items:center;background:var(--blueSoft);
+      color:var(--blue);font-weight:800
+    }
+    .company b{display:block}
+    .company small{color:var(--muted)}
+    .review{
+      background:#f9fbfd;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px
+    }
+    .stars{color:#ffad14;letter-spacing:2px;margin-bottom:6px}
+    .review small{color:var(--muted)}
 
-  /* ---------- features ---------- */
-  .features {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-    margin: 64px 0 20px;
-  }
-  .feat {
-    background: linear-gradient(180deg, var(--surface), var(--bg-2));
-    border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px;
-  }
-  .feat .fi {
-    width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center;
-    background: var(--accent-soft); color: var(--accent); font-size: 21px; margin-bottom: 14px;
-  }
-  .feat h3 { font-family: var(--font-display); font-weight: 600; font-size: 16.5px; margin: 0 0 6px; }
-  .feat p { margin: 0; font-size: 13.5px; color: var(--muted); font-weight: 300; }
+    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .price-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      box-shadow:var(--shadow2)
+    }
+    .price-card.featured{
+      border:2px solid var(--blue);
+      box-shadow:0 18px 44px rgba(22,119,255,.12);
+      transform:translateY(-5px)
+    }
+    .badge{
+      position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
+      background:var(--blue);color:#fff;
+      border-radius:999px;padding:5px 11px;
+      font-size:11px;font-weight:700;white-space:nowrap
+    }
+    .plan{color:var(--muted);font-weight:700;font-size:14px}
+    .quota{font:700 24px var(--display);margin:10px 0 4px}
+    .use{color:var(--muted);font-size:13px;min-height:44px}
+    .price{font:700 36px var(--display);margin:18px 0 0}
+    .price small{font:400 13px var(--body);color:var(--muted)}
+    .price-note{font-size:12px;color:var(--green);margin:0 0 18px}
+    .price-card .btn{margin-top:auto;width:100%}
+    .btn.ghost{background:#f7f9fc}
 
-  /* ---------- footer ---------- */
-  .disclaimer {
-    margin: 40px 0 0; padding: 16px 18px; border-radius: 13px;
-    background: rgba(255,180,60,.06); border: 1px solid rgba(255,180,60,.20);
-    font-size: 13px; color: #e7cfa0; display: flex; gap: 11px; align-items: flex-start;
-  }
-  .disclaimer .di { flex-shrink: 0; }
-  footer {
-    text-align: center; color: var(--faint); font-size: 12.5px;
-    padding: 34px 0 40px; margin-top: 30px;
-  }
-  footer .fname { font-family: var(--font-display); color: var(--muted); font-weight: 600; }
+    .risk{
+      background:var(--amberSoft);
+      border:1px solid #f1ddb0;
+      border-radius:16px;
+      padding:22px;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:14px;
+      max-width:920px;
+      margin:0 auto;
+    }
+    .riskicon{font-size:24px}
+    .risk h3{margin:0 0 6px;font:700 18px var(--display);color:#7b5400}
+    .risk p{margin:0;color:#7b673e;font-size:14px}
 
-  /* ---------- entrance motion ---------- */
-  .reveal { opacity: 0; transform: translateY(18px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
-  .reveal.d1 { animation-delay: .06s; } .reveal.d2 { animation-delay: .14s; }
-  .reveal.d3 { animation-delay: .22s; } .reveal.d4 { animation-delay: .32s; }
-  .reveal.d5 { animation-delay: .42s; }
-  @keyframes rise { to { opacity: 1; transform: none; } }
+    .faq{max-width:860px;margin:auto}
+    details{
+      background:#fff;border:1px solid var(--line);
+      border-radius:14px;padding:0 18px;margin-bottom:10px
+    }
+    summary{
+      cursor:pointer;padding:17px 0;font-weight:700;font-family:var(--display)
+    }
+    details p{color:var(--muted);font-size:14px;margin:0 0 17px}
 
-  @media (max-width: 720px) {
-    .features { grid-template-columns: 1fr; }
-    .btn { width: 100%; justify-content: center; }
-    .downloads { flex-direction: column; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { animation: none; opacity: 1; transform: none; }
-    .logo-badge::before { animation: none; }
-    .btn-win:hover { transform: none; }
-  }
-</style>
+    .final{
+      text-align:center;
+      background:linear-gradient(135deg,#0f213b,#17345d);
+      border-radius:24px;
+      padding:64px 24px;
+      color:#fff;
+      box-shadow:var(--shadow)
+    }
+    .final img{width:76px;height:76px;border-radius:50%;margin-bottom:14px}
+    .final h2{font:700 clamp(30px,4vw,44px)/1.2 var(--display);margin:0 0 12px}
+    .final p{max-width:650px;margin:0 auto 24px;color:#c3cfdf}
+    .install{margin-top:13px;color:#9fb0c5;font-size:12px}
+
+    footer{text-align:center;color:#8493a8;padding:36px 0 50px;font-size:12px}
+
+    .sticky{display:none}
+
+    @media(max-width:980px){
+      .hero,.demo,.proof{grid-template-columns:1fr}
+      .hero{gap:38px}
+      .pricing{grid-template-columns:repeat(2,1fr)}
+      .cards{grid-template-columns:1fr}
+      .trustitems{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:700px){
+      .wrap{width:min(var(--max),calc(100% - 28px))}
+      .navlinks a:not(.navcta){display:none}
+      .hero{padding:46px 0 60px}
+      .app{grid-template-columns:120px 1fr;min-height:360px}
+      .sidebar{padding:15px 10px}
+      .sideitem{font-size:11px}
+      .beforeafter,.pricing,.trustitems{grid-template-columns:1fr}
+      .price-card.featured{transform:none}
+      section{padding:58px 0}
+      .section-head{text-align:left}
+      .demo{padding:22px}
+      .video-placeholder{min-height:250px}
+      .ctas .btn{width:100%}
+      .sticky{
+        display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:99;
+        background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;text-align:center;
+        text-decoration:none;padding:13px 16px;border-radius:12px;font-weight:700;
+        box-shadow:0 16px 38px rgba(0,0,0,.25)
+      }
+      footer{padding-bottom:90px}
+    }
+  </style>
 </head>
 <body>
+
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand"><img src="logo.png" alt="AutoPost RV"><div>AutoPost <span>RV</span></div></div>
+    <div class="navlinks">
+      <a href="#how">วิธีใช้งาน</a>
+      <a href="#trust">ความน่าเชื่อถือ</a>
+      <a href="#pricing">ราคา</a>
+      <a href="#faq">FAQ</a>
+      <a class="navcta download-link" href="#">ทดลองใช้ฟรี</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">✓ ทดลองใช้ฟรี 50 โพสต์ · ไม่ต้องใส่บัตร</div>
+      <h1>โพสต์หลาย Facebook Group<br><span class="accent">ไม่ต้องทำซ้ำทีละกลุ่ม</span></h1>
+      <p class="lead">ลดเวลางานโพสต์ซ้ำ แล้วเอาเวลาไปคุยกับลูกค้าและปิดการขาย</p>
+      <p class="sub">AutoPost RV ช่วยจัดการร่างประกาศ รายชื่อกลุ่ม และการโพสต์หลายกลุ่มจากโปรแกรมเดียว เหมาะสำหรับนายหน้าอสังหา คนขายรถ และคนที่ต้องลงประกาศเดิมซ้ำทุกวัน</p>
+      <div class="ctas">
+        <a class="btn primary download-link" href="#">⬇ ดาวน์โหลดทดลองใช้ฟรี 50 โพสต์</a>
+        <a class="btn secondary" href="#how">ดูวิธีทำงาน</a>
+      </div>
+      <div class="micro"><b>เริ่มฟรีก่อน</b> · Windows 10/11 · ใช้ร่วมกับ Google Chrome</div>
+    </div>
+
+    <div class="product-shell" aria-label="ภาพหน้าจอจริงของ AutoPost RV V2 beta.6">
+      <div class="windowbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="windowtitle">หน้าจอจริง · AutoPost RV V2 beta.6</span></div>
+      <img class="product-shot" src="assets/autopost-v2-dashboard.png" alt="หน้าจอโพสต์วันนี้ของ AutoPost RV V2 พร้อมร่างโพสต์ กลุ่มเป้าหมาย และ Live Monitor">
+    </div>
+  </header>
+</div>
+
+<div class="trustbar">
   <div class="wrap">
-
-    <div class="topbar">
-      <img src="./logo.png" alt="AutoPost RV" />
-      <div class="name">AutoPost <span>RV</span></div>
+    <div class="trustitems">
+      <div>✓ <b>ทดลองใช้ฟรี 50 โพสต์</b></div>
+      <div>✓ <b>ไม่ต้องใส่บัตร</b></div>
+      <div>✓ <b>Windows 10/11</b></div>
+      <div>✓ <b>มีทีม Support ในไทย</b></div>
     </div>
-
-    <header class="hero">
-      <div class="logo-badge reveal d1"><img src="./logo.png" alt="โลโก้ AutoPost RV" /></div>
-      <div class="eyebrow reveal d2">FACEBOOK GROUP AUTO-POSTER</div>
-      <h1 class="reveal d2">AutoPost <span class="rv">RV</span></h1>
-      <p class="tagline reveal d3">โพสต์ประกาศเข้ากลุ่ม Facebook อัตโนมัติ</p>
-      <p class="sub reveal d3">จัดการหลายบัญชี · หลายกลุ่ม · หลายร่างประกาศ ในโปรแกรมเดียว — ออกแบบมาเพื่องานขายบ้าน ที่ดิน คอนโด</p>
-
-      <div class="downloads reveal d4">
-        <a class="btn btn-win" id="winDownload" href="#" rel="noopener">
-          <span class="ico">⬇</span>
-          <span class="lines">ดาวน์โหลดสำหรับ Windows
-            <small>Windows 10/11 · 64-bit · V2 beta.6 · ~214 MB · ไฟล์ .exe</small>
-          </span>
-        </a>
-        <span class="btn btn-mac" aria-disabled="true">
-          <span class="ico"></span>
-          <span class="lines">macOS <span class="soon">เร็ว ๆ นี้</span>
-            <small>กำลังพัฒนาเวอร์ชัน Mac</small>
-          </span>
-        </span>
-      </div>
-
-      <div class="requirement reveal d5">
-        <span class="rq">⚙️ ต้องมี <a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Google Chrome</a> ติดตั้งในเครื่อง</span>
-        <div class="note">โปรแกรมใช้ Google Chrome ในการเปิด Facebook — ถ้ายังไม่มี ติดตั้งฟรีก่อนใช้งาน</div>
-      </div>
-
-      <div class="install-hint reveal d5">
-        <span>หลังโหลด: ถ้า Windows เตือน “Unknown publisher” →</span>
-        <b>กด <span class="kbd">More info</span> → <span class="kbd">Run anyway</span></b>
-      </div>
-    </header>
-
-    <section class="features">
-      <div class="feat reveal d3">
-        <div class="fi">👥</div>
-        <h3>หลายบัญชี Facebook</h3>
-        <p>สลับบัญชีในคลิกเดียว แยกกลุ่ม/ร่าง/ประวัติของแต่ละบัญชีให้อัตโนมัติ</p>
-      </div>
-      <div class="feat reveal d4">
-        <div class="fi">🤝</div>
-        <h3>เข้าร่วมกลุ่มให้เอง</h3>
-        <p>ยังไม่เป็นสมาชิก? ระบบกดเข้าร่วมกลุ่มก่อนโพสต์ให้อัตโนมัติ</p>
-      </div>
-      <div class="feat reveal d5">
-        <div class="fi">🚀</div>
-        <h3>โพสต์ทีละหลายกลุ่ม</h3>
-        <p>ยิงประกาศพร้อมรูปเข้าหลายกลุ่มรวด พร้อมประวัติและสถิติครบ</p>
-      </div>
-    </section>
-
-    <div class="disclaimer">
-      <span class="di">⚠️</span>
-      <span>การใช้โปรแกรมโพสต์อัตโนมัติขัดกับข้อกำหนดของ Facebook และ<b> มีความเสี่ยงต่อบัญชี</b> โปรดใช้ด้วยความระมัดระวัง (เลือกโหมด “ถนอมบัญชี” ไม่ยิงทีละมากเกินไป) — ผู้ใช้ยอมรับความเสี่ยงที่อาจเกิดกับบัญชีของตนเอง</span>
-    </div>
-
-    <footer>
-      <span class="fname">AutoPost RV</span> · © 2026 · โปรแกรมสำหรับ Windows
-    </footer>
-
   </div>
+</div>
 
-  <script>
-    // 👉 ตัวติดตั้ง Windows ล่าสุด (GitHub Release · โหลด .exe ได้โดยตรง)
-    const DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe";
+<div class="wrap">
+  <section>
+    <div class="section-head">
+      <div class="kicker">ก่อนใช้ / หลังใช้</div>
+      <h2>จากงานเป็นชั่วโมง ให้เหลือแค่งานที่คุณต้องตั้งค่า</h2>
+      <p>AutoPost RV ไม่ได้ขายแทนคุณ แต่ช่วยลดงานซ้ำที่กินเวลาทุกวัน</p>
+    </div>
 
-    document.addEventListener("DOMContentLoaded", function () {
-      var btn = document.getElementById("winDownload");
-      if (DOWNLOAD_URL) {
-        btn.href = DOWNLOAD_URL;
-        btn.setAttribute("download", "");
-      } else {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          alert("ยังไม่ได้ตั้งลิงก์ดาวน์โหลด\n\nเปิดไฟล์ index.html แล้วใส่ลิงก์ที่ตัวแปร DOWNLOAD_URL");
-        });
-      }
-    });
-  </script>
+    <div class="beforeafter">
+      <div class="ba before">
+        <div class="ba-label">ก่อนมี AutoPost RV</div>
+        <div class="timeline">
+          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เปิด Facebook</b> เตรียมโพสต์</div></div>
+          <div class="timeitem"><div class="time">09:10</div><div class="task">คัดลอกข้อความ + เลือกรูป + เข้า Group 1</div></div>
+          <div class="timeitem"><div class="time">09:30</div><div class="task">ยังโพสต์ต่อ Group 8, 9, 10...</div></div>
+          <div class="timeitem"><div class="time">10:00+</div><div class="task">ยังต้องจำเองว่าโพสต์กลุ่มไหนไปแล้ว</div></div>
+        </div>
+      </div>
+
+      <div class="ba after">
+        <div class="ba-label">หลังมี AutoPost RV</div>
+        <div class="timeline">
+          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เลือกร่างประกาศ</b></div></div>
+          <div class="timeitem"><div class="time">09:02</div><div class="task"><b>เลือกกลุ่ม</b> ที่ต้องการ</div></div>
+          <div class="timeitem"><div class="time">09:03</div><div class="task"><b>เริ่มงาน</b> แล้วติดตามสถานะจากโปรแกรม</div></div>
+          <div class="timeitem"><div class="time">หลังจากนั้น</div><div class="task">กลับไปตอบลูกค้าและทำงานที่สร้างรายได้</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="section-head">
+      <div class="kicker">ใช้งานง่าย</div>
+      <h2>เหมาะกับคนที่ต้องโพสต์ซ้ำจริงทุกวัน</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🏢</div>
+        <h3>นายหน้าอสังหา</h3>
+        <p>คอนโด บ้าน ที่ดิน ห้องเช่า หรือทรัพย์หลายรายการที่ต้องกระจายประกาศหลายกลุ่มเป็นประจำ</p>
+      </div>
+      <div class="card">
+        <div class="icon">🚗</div>
+        <h3>รถมือสอง / รถบ้าน</h3>
+        <p>ลดการคัดลอกโพสต์เดิมไปหลายกลุ่ม และจัดการหลายประกาศให้อยู่ในที่เดียว</p>
+      </div>
+      <div class="card">
+        <div class="icon">📦</div>
+        <h3>ผู้ขายที่พึ่ง Facebook Group</h3>
+        <p>เหมาะกับงานที่ต้องใช้ข้อความ รูป และกลุ่มเดิมซ้ำอยู่เป็นประจำ</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="demo">
+      <div class="video-placeholder" id="youtubeDemo" aria-label="พื้นที่วิดีโอสาธิต AutoPost RV บน YouTube">
+        <div class="video-fallback">
+          <div class="play">▶</div>
+          <div>วิดีโอสาธิตบน YouTube<br><small>พร้อมใส่ลิงก์เมื่อมีคลิปจริง</small></div>
+        </div>
+      </div>
+      <div class="democopy">
+        <div class="kicker">ดูของจริงก่อนตัดสินใจ</div>
+        <h2>เห็นวิธีทำงานใน 30 วินาที ดีกว่าอ่านคำอธิบายยาว ๆ</h2>
+        <p>ส่วนนี้เตรียมไว้สำหรับวิดีโอ Demo จริงบน YouTube เมื่อมีคลิปให้ใส่ YouTube Video ID จุดเดียว วิดีโอจะแสดงในกรอบนี้ทันที</p>
+        <div class="checklist">
+          <div class="check"><span>✓</span><span>เลือกร่างประกาศ</span></div>
+          <div class="check"><span>✓</span><span>เลือกกลุ่มที่ต้องการ</span></div>
+          <div class="check"><span>✓</span><span>กดเริ่ม แล้วดูสถานะงาน</span></div>
+          <div class="check"><span>✓</span><span>ไม่ต้องเข้าโพสต์ทีละกลุ่มด้วยตัวเอง</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust">
+    <div class="section-head">
+      <div class="kicker">เรื่องที่ลูกค้าต้องมั่นใจก่อนโหลด</div>
+      <h2>รู้ว่าใครทำ รู้ว่าได้อะไร และรู้ว่าติดต่อใครเมื่อมีปัญหา</h2>
+    </div>
+
+    <div class="proof">
+      <div class="trust-box">
+        <h3>พัฒนาและดูแลโดยทีมไทย</h3>
+        <p>AutoPost RV เป็นซอฟต์แวร์ที่พัฒนาเพื่อแก้ปัญหางานโพสต์ซ้ำของคนขายจริง โดยมีทีม Support สำหรับช่วยเรื่องการติดตั้งและการใช้งาน</p>
+
+        <div class="company">
+          <div class="company-logo">NH</div>
+          <div>
+            <b>Needhome Solution Co., Ltd.</b>
+            <small>Software & Automation Team · Thailand</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-box">
+        <h3>รีวิวจากผู้ใช้ Beta</h3>
+        <p>ยังไม่มีรีวิวจริงในหน้านี้ — ควรใส่เฉพาะรีวิวจากผู้ใช้จริงหลังเริ่ม Beta เท่านั้น</p>
+
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <div style="color:#65758d">ตำแหน่งสำหรับรีวิวผู้ใช้จริง เช่น “ปกติต้องโพสต์เองหลายสิบกลุ่ม ตอนนี้จัดการง่ายขึ้นมาก”</div>
+          <small>— ชื่อจริง / อาชีพ / จังหวัด</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="section-head">
+      <div class="kicker">ราคาไม่ซับซ้อน</div>
+      <h2>ลองฟรีก่อน แล้วค่อยจ่ายตามปริมาณที่ใช้</h2>
+      <p>ทุกแพ็กใช้ฟีเจอร์หลักเหมือนกัน ต่างกันที่จำนวนโพสต์ต่อเดือน</p>
+    </div>
+
+    <div class="pricing">
+      <div class="price-card">
+        <div class="plan">ทดลองใช้</div>
+        <div class="quota">50 โพสต์</div>
+        <div class="use">ลองกับงานจริงก่อนตัดสินใจ</div>
+        <div class="price">ฟรี</div>
+        <div class="price-note">ไม่ต้องใส่บัตร</div>
+        <a class="btn ghost download-link" href="#">ดาวน์โหลดทดลองใช้ฟรี</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan">Starter</div>
+        <div class="quota">700 โพสต์ / เดือน</div>
+        <div class="use">เหมาะกับผู้ใช้ที่โพสต์สม่ำเสมอ</div>
+        <div class="price">299฿ <small>/ เดือน</small></div>
+        <div class="price-note">ประมาณ 20–25 โพสต์ / วัน</div>
+        <a class="btn ghost download-link" href="#">เริ่มใช้ฟรีก่อน</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="badge">แนะนำ</div>
+        <div class="plan">Pro</div>
+        <div class="quota">1,500 โพสต์ / เดือน</div>
+        <div class="use">เหมาะกับนายหน้าหรือผู้ขายที่ใช้งานทุกวัน</div>
+        <div class="price">499฿ <small>/ เดือน</small></div>
+        <div class="price-note">เหมาะกับผู้ใช้หลักของ AutoPost RV</div>
+        <a class="btn primary download-link" href="#">ทดลองใช้ฟรี 50 โพสต์</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan">Power</div>
+        <div class="quota">3,000 โพสต์ / เดือน</div>
+        <div class="use">เหมาะกับผู้ใช้หนักหรือมีหลายประกาศ</div>
+        <div class="price">799฿ <small>/ เดือน</small></div>
+        <div class="price-note">สำหรับปริมาณงานสูง</div>
+        <a class="btn ghost download-link" href="#">เริ่มใช้ฟรีก่อน</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="risk">
+      <div class="riskicon">⚠️</div>
+      <div>
+        <h3>โปร่งใสเรื่องความเสี่ยงของ Facebook</h3>
+        <p>Facebook มีระบบจำกัดกิจกรรมที่มองว่าผิดปกติ และไม่มีซอฟต์แวร์ใดรับประกันได้ว่าบัญชีจะไม่ถูกจำกัดการใช้งาน AutoPost RV จึงไม่รับประกันเรื่อง restriction หรือ ban ผู้ใช้ควรเริ่มจากปริมาณน้อย ใช้งานอย่างเหมาะสม และเป็นผู้ตัดสินใจรับความเสี่ยงด้วยตนเอง</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="section-head">
+      <div class="kicker">FAQ</div>
+      <h2>คำถามก่อนดาวน์โหลด</h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>ทดลองใช้ฟรี 50 โพสต์ ต้องใส่บัตรไหม?</summary>
+        <p>ไม่ต้องใส่บัตร สามารถดาวน์โหลดแล้วทดลองกับงานจริงได้ก่อน</p>
+      </details>
+
+      <details>
+        <summary>ใช้กับ Mac ได้ไหม?</summary>
+        <p>ตอนนี้รองรับ Windows 10/11 แบบ 64-bit ก่อน เวอร์ชัน macOS ยังไม่เปิดให้ใช้งาน</p>
+      </details>
+
+      <details>
+        <summary>ต้องติดตั้ง Google Chrome หรือไม่?</summary>
+        <p>ต้องมี Google Chrome เพราะโปรแกรมใช้ Chrome ในการเปิด Facebook และทำงาน</p>
+      </details>
+
+      <details>
+        <summary>ใช้แล้วรับประกันว่า Facebook จะไม่แบนไหม?</summary>
+        <p>ไม่รับประกัน Facebook สามารถเปลี่ยนข้อกำหนดและระบบตรวจจับได้ตลอด ผู้ใช้ควรพิจารณาความเสี่ยงก่อนใช้งาน</p>
+      </details>
+
+      <details>
+        <summary>หมด 50 โพสต์แล้วต้องทำอย่างไร?</summary>
+        <p>เลือกแพ็ก Starter, Pro หรือ Power ตามจำนวนโพสต์ที่ต้องการใช้ต่อเดือน</p>
+      </details>
+
+      <details>
+        <summary>ถ้าติดตั้งหรือใช้งานไม่ได้ ติดต่อใคร?</summary>
+        <p>ควรใส่ LINE Support, Email หรือช่องทางติดต่อจริงของทีมในส่วนนี้ก่อนเปิดขายเต็มรูปแบบ</p>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="final">
+      <img src="logo.png" alt="AutoPost RV">
+      <h2>อย่าเพิ่งซื้อ — ลองกับงานจริงก่อน 50 โพสต์</h2>
+      <p>ถ้ามันช่วยลดงานได้ ค่อยเลือกแพ็กที่เหมาะกับคุณ ถ้าไม่ช่วย ก็ไม่ต้องซื้อ</p>
+      <a class="btn primary download-link" href="#">⬇ ดาวน์โหลด AutoPost RV ฟรี</a>
+      <div class="install">Windows 10/11 · 64-bit · ใช้ร่วมกับ Google Chrome · ไฟล์ .exe</div>
+    </div>
+  </section>
+
+  <footer>AutoPost RV · © 2026 · Needhome Solution Co., Ltd.</footer>
+</div>
+
+<a class="sticky download-link" href="#">⬇ ทดลองใช้ฟรี 50 โพสต์</a>
+
+<script>
+  const DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe";
+  const YOUTUBE_VIDEO_ID = ""; // ใส่เฉพาะ Video ID เช่น dQw4w9WgXcQ
+  document.querySelectorAll(".download-link").forEach(el => {
+    el.href = DOWNLOAD_URL;
+    el.rel = "noopener";
+  });
+  if (/^[\w-]{11}$/.test(YOUTUBE_VIDEO_ID)) {
+    const demo = document.getElementById("youtubeDemo");
+    demo.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}" title="วิดีโอสาธิต AutoPost RV" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  }
+</script>
+
 </body>
 </html>
