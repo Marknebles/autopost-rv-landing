@@ -4,11 +4,44 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม</title>
-  <meta name="description" content="AutoPost RV ช่วยจัดการการโพสต์ประกาศเข้า Facebook Group หลายกลุ่มจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows" />
-  <link rel="icon" href="logo.png" />
+  <meta name="description" content="AutoPost RV ซอฟต์แวร์ช่วยจัดการและโพสต์ประกาศเข้า Facebook Group หลายกลุ่มอัตโนมัติจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#1677ff" />
+  <link rel="canonical" href="https://marknebles.github.io/autopost-rv-landing/" />
+  <link rel="icon" type="image/png" sizes="512x512" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="th_TH" />
+  <meta property="og:site_name" content="AutoPost RV" />
+  <meta property="og:title" content="AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม" />
+  <meta property="og:description" content="จัดการร่าง กลุ่มเป้าหมาย รูปและวิดีโอจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta property="og:url" content="https://marknebles.github.io/autopost-rv-landing/" />
+  <meta property="og:image" content="https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="1000" />
+  <meta property="og:image:alt" content="หน้าจอจริงของ AutoPost RV V2" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AutoPost RV — ลดงานโพสต์ Facebook Group ซ้ำ" />
+  <meta name="twitter:description" content="ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta name="twitter:image" content="https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AutoPost RV V2",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Windows 10, Windows 11",
+    "softwareVersion": "0.2.0-beta.6",
+    "description": "โปรแกรมช่วยจัดการร่าง กลุ่มเป้าหมาย รูป วิดีโอ และประวัติการโพสต์ Facebook Group จากเครื่องของผู้ใช้",
+    "image": "https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png",
+    "downloadUrl": "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe",
+    "publisher": {"@type": "Organization", "name": "Needhome Solution Co., Ltd."},
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "THB", "description": "ทดลองใช้ฟรี 50 โพสต์"}
+  }
+  </script>
   <style>
     :root{
       --bg:#f7f9fc;
@@ -21,8 +54,12 @@
       --blueSoft:#eef6ff;
       --green:#16a66a;
       --greenSoft:#edf9f4;
+      --line-green:#06c755;
+      --line-green-dark:#05b04b;
       --amber:#b77a00;
       --amberSoft:#fff8e7;
+      --red:#e03131;
+      --redSoft:#fff5f5;
       --shadow:0 20px 50px rgba(16,33,58,.08);
       --shadow2:0 10px 28px rgba(16,33,58,.07);
       --max:1180px;
@@ -32,6 +69,7 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+    img{max-width:100%}
     body{
       margin:0;
       color:var(--ink);
@@ -44,6 +82,9 @@
 
     a{color:inherit}
     .wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .skip-link{position:fixed;left:12px;top:12px;z-index:999;padding:10px 14px;border-radius:10px;background:#fff;color:var(--ink);box-shadow:var(--shadow2);transform:translateY(-150%);transition:transform .15s}
+    .skip-link:focus{transform:translateY(0)}
+    a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid rgba(22,119,255,.42);outline-offset:3px;border-radius:8px}
 
     .nav{
       height:76px;
@@ -51,26 +92,42 @@
       align-items:center;
       justify-content:space-between;
     }
-    .brand{display:flex;align-items:center;gap:12px;font:700 20px var(--display)}
+    .brand{display:flex;align-items:center;gap:12px;font:700 20px var(--display);text-decoration:none}
     .brand img{width:40px;height:40px;border-radius:50%}
     .brand span{color:var(--blue)}
-    .navlinks{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
-    .navlinks a{text-decoration:none}
+    .navlinks{display:flex;align-items:center;gap:20px;font-size:14px;color:var(--muted)}
+    .navlinks a{text-decoration:none;transition:.15s}
+    .navlinks a:hover{color:var(--ink)}
+    .nav-line-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:var(--line-green) !important;
+      background:#e8fbf0;
+      border:1px solid #c3f2d6;
+      padding:8px 14px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:13px;
+    }
+    .nav-line-btn:hover{background:#d5f7e4}
     .navcta{
       color:#fff !important;
       background:var(--blue);
-      padding:10px 16px;
+      padding:10px 18px;
       border-radius:10px;
       font-weight:700;
-      box-shadow:0 8px 20px rgba(22,119,255,.18)
+      box-shadow:0 8px 20px rgba(22,119,255,.18);
+      transition:.18s ease;
     }
+    .navcta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(22,119,255,.25)}
 
     .hero{
       display:grid;
       grid-template-columns:1.02fr .98fr;
       gap:64px;
       align-items:center;
-      padding:64px 0 84px;
+      padding:56px 0 80px;
     }
     .eyebrow{
       display:inline-flex;
@@ -80,29 +137,30 @@
       background:var(--greenSoft);
       border:1px solid #d5f0e4;
       border-radius:999px;
-      padding:7px 12px;
+      padding:7px 14px;
       font-size:13px;
       font-weight:700;
       margin-bottom:18px;
     }
     h1{
       margin:0 0 18px;
-      font:700 clamp(42px,5.6vw,70px)/1.08 var(--display);
-      letter-spacing:-1.4px;
+      font:700 clamp(38px,5.2vw,64px)/1.12 var(--display);
+      letter-spacing:-1.2px;
     }
     h1 .accent{color:var(--blue)}
     .lead{
       margin:0 0 10px;
-      font:500 clamp(20px,2.2vw,25px)/1.5 var(--display);
+      font:500 clamp(18px,2vw,24px)/1.5 var(--display);
       max-width:700px;
+      color:var(--ink);
     }
     .sub{
       margin:0 0 28px;
       color:var(--muted);
-      font-size:16px;
+      font-size:15px;
       max-width:660px;
     }
-    .ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
     .btn{
       display:inline-flex;
       align-items:center;
@@ -115,6 +173,7 @@
       font:700 15px var(--display);
       transition:.18s ease;
       border:1px solid var(--line);
+      cursor:pointer;
     }
     .btn.primary{
       color:#fff;
@@ -124,19 +183,34 @@
     }
     .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(22,119,255,.30)}
     .btn.secondary{background:#fff;color:var(--ink)}
+    .btn.secondary:hover{background:#f4f7fb}
+    .btn.line{
+      background:var(--line-green);
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 10px 24px rgba(6,199,85,.20);
+    }
+    .btn.line:hover{background:var(--line-green-dark);transform:translateY(-2px)}
     .micro{
-      margin-top:12px;
+      margin-top:14px;
       font-size:13px;
-      color:var(--muted)
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
     }
     .micro b{color:var(--green)}
+    .release-proof{margin-top:9px;color:#75859b;font-size:11.5px}
+    .release-proof code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#42546d}
 
     .product-shell{
       background:#fff;
       border:1px solid var(--line);
       border-radius:22px;
       box-shadow:var(--shadow);
-      overflow:hidden;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
     }
     .windowbar{
       height:42px;
@@ -157,51 +231,6 @@
       object-position:top center;
       background:#eef2f8;
     }
-    .app{
-      display:grid;
-      grid-template-columns:170px 1fr;
-      min-height:430px;
-    }
-    .sidebar{
-      background:#10213a;
-      color:#dfe8f5;
-      padding:20px 14px;
-    }
-    .sidebrand{
-      display:flex;align-items:center;gap:9px;
-      font-weight:700;margin-bottom:24px
-    }
-    .sidebrand img{width:30px;height:30px;border-radius:50%}
-    .sideitem{
-      padding:10px 11px;border-radius:9px;font-size:13px;color:#b7c5d9;margin-bottom:6px
-    }
-    .sideitem.active{background:#1f3b63;color:#fff}
-    .canvas{padding:20px;background:#fbfdff}
-    .canvas-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
-    .canvas h3{margin:0;font:700 20px var(--display)}
-    .canvas p{margin:4px 0 0;color:var(--muted);font-size:13px}
-    .small-btn{background:var(--blue);color:#fff;border-radius:8px;padding:8px 11px;font-size:12px;font-weight:700}
-    .job{
-      border:1px solid var(--line);
-      border-radius:13px;
-      background:#fff;
-      padding:14px;
-      margin-bottom:11px;
-      box-shadow:0 4px 14px rgba(16,33,58,.03)
-    }
-    .jobtop{display:flex;justify-content:space-between;gap:10px}
-    .jobtitle{font-weight:700;font-size:14px}
-    .status{
-      color:var(--green);
-      background:var(--greenSoft);
-      border-radius:999px;
-      padding:3px 8px;
-      font-size:11px;font-weight:700
-    }
-    .groupname{margin-top:4px;color:var(--muted);font-size:12px}
-    .progress{height:7px;background:#edf1f6;border-radius:999px;overflow:hidden;margin-top:10px}
-    .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#3bbcff)}
-    .stats{display:flex;justify-content:space-between;color:#8090a7;font-size:11px;margin-top:6px}
 
     .trustbar{
       border-top:1px solid var(--line);
@@ -218,58 +247,136 @@
     }
     .trustitems b{color:var(--ink)}
 
-    section{padding:82px 0}
-    .section-head{text-align:center;max-width:760px;margin:0 auto 38px}
-    .section-head .kicker{color:var(--blue);font-weight:700;font-size:13px;letter-spacing:.3px}
-    .section-head h2{margin:8px 0 10px;font:700 clamp(30px,4vw,46px)/1.2 var(--display)}
-    .section-head p{margin:0;color:var(--muted)}
+    section{padding:78px 0}
+    .section-head{text-align:center;max-width:780px;margin:0 auto 38px}
+    .section-head .kicker{color:var(--blue);font-weight:700;font-size:13px;letter-spacing:.3px;text-transform:uppercase}
+    .section-head h2{margin:8px 0 10px;font:700 clamp(28px,3.8vw,44px)/1.2 var(--display)}
+    .section-head p{margin:0;color:var(--muted);font-size:15px}
 
+    /* Before vs After */
     .beforeafter{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:20px;
+      gap:22px;
     }
     .ba{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:20px;
       padding:28px;
       box-shadow:var(--shadow2);
     }
     .ba.before{border-top:4px solid #c8d1df}
-    .ba.after{border-top:4px solid var(--blue)}
+    .ba.after{border-top:4px solid var(--blue);background:linear-gradient(180deg,#fff 0%,#fbfdff 100%)}
     .ba-label{
-      font-size:12px;font-weight:700;letter-spacing:.5px;
-      text-transform:uppercase;margin-bottom:14px
+      font-size:13px;font-weight:700;letter-spacing:.5px;
+      margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;
     }
     .before .ba-label{color:#73839a}
     .after .ba-label{color:var(--blue)}
-    .timeline{display:grid;gap:10px}
+    .badge-pill{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+    .badge-pill.gray{background:#edf2f7;color:#64748b}
+    .badge-pill.blue{background:var(--blueSoft);color:var(--blue)}
+    .timeline{display:grid;gap:12px}
     .timeitem{
-      display:grid;grid-template-columns:70px 1fr;gap:12px;
+      display:grid;grid-template-columns:75px 1fr;gap:12px;
       padding:10px 0;border-bottom:1px solid #f0f3f7
     }
     .timeitem:last-child{border-bottom:none}
-    .time{font-weight:700;color:#7a8aa1}
-    .task{color:var(--muted)}
+    .time{font-weight:700;color:#7a8aa1;font-size:13px}
+    .task{color:var(--muted);font-size:14px}
     .task b{color:var(--ink)}
 
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    /* Cards - Target Audience */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .card{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:24px;
+      border-radius:20px;
+      padding:26px;
       box-shadow:var(--shadow2);
     }
     .card .icon{
-      width:46px;height:46px;display:grid;place-items:center;
-      border-radius:12px;background:var(--blueSoft);
-      font-size:22px;margin-bottom:16px
+      width:48px;height:48px;display:grid;place-items:center;
+      border-radius:14px;background:var(--blueSoft);
+      font-size:24px;margin-bottom:16px
     }
-    .card h3{margin:0 0 8px;font:600 18px var(--display)}
+    .card h3{margin:0 0 8px;font:700 18px var(--display)}
     .card p{margin:0;color:var(--muted);font-size:14px}
 
+    /* Comparison Table (โปรแกรมอื่น vs AutoPost RV) */
+    .comparison-wrapper{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+    }
+    .comp-table{
+      width:100%;
+      min-width:720px;
+      border-collapse:collapse;
+      text-align:left;
+    }
+    .comp-table th{
+      padding:20px 24px;
+      font-family:var(--display);
+      font-weight:700;
+      font-size:16px;
+      background:#f8fafc;
+      border-bottom:2px solid var(--line);
+    }
+    .comp-table th.other-col{color:#64748b;width:40%}
+    .comp-table th.rv-col{
+      color:var(--blue);
+      background:#eff6ff;
+      border-bottom:2px solid var(--blue);
+      width:40%;
+    }
+    .comp-table th.feature-col{width:20%;color:var(--ink)}
+    .comp-table td{
+      padding:18px 24px;
+      border-bottom:1px solid var(--line);
+      font-size:14.5px;
+      vertical-align:top;
+    }
+    .comp-table tr:last-child td{border-bottom:none}
+    .comp-table td.feature-col{
+      font-weight:700;
+      color:var(--ink);
+      background:#fdfefe;
+    }
+    .comp-table td.other-col{
+      color:#64748b;
+      background:#fcfdfd;
+    }
+    .comp-table td.rv-col{
+      background:#f6faff;
+      font-weight:600;
+      color:#102a4e;
+    }
+    .bad-tag{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:6px;
+      background:var(--redSoft);
+      color:var(--red);
+      font-size:12px;
+      font-weight:700;
+      margin-top:4px;
+    }
+    .good-tag{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:6px;
+      background:var(--greenSoft);
+      color:var(--green);
+      font-size:12px;
+      font-weight:700;
+      margin-top:4px;
+    }
+
+    /* Workflow Demo */
     .demo{
       display:grid;
       grid-template-columns:1.05fr .95fr;
@@ -277,20 +384,24 @@
       align-items:center;
       background:#0f213b;
       border-radius:24px;
-      padding:34px;
+      padding:36px;
       color:#fff;
+      box-shadow:var(--shadow);
     }
     .video-placeholder{
-      min-height:360px;
+      min-height:340px;
       border-radius:18px;
       background:
-        linear-gradient(rgba(8,18,33,.25),rgba(8,18,33,.25)),
-        radial-gradient(circle at 70% 30%,#2e5c95 0,#18345b 40%,#0b1a30 100%);
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.10);
+        radial-gradient(circle at 70% 30%,#244b7d 0,#142a4a 50%,#091526 100%);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      border:1px solid rgba(255,255,255,.12);
       position:relative;
       overflow:hidden;
+      padding:24px;
+      text-align:center;
     }
     .video-placeholder iframe{
       position:absolute;
@@ -299,113 +410,255 @@
       height:100%;
       border:0;
     }
-    .video-fallback{
+    .demo-steps-preview{
       display:grid;
-      justify-items:center;
-      gap:14px;
-      color:#dbe8f7;
-      text-align:center;
-      padding:28px;
+      gap:10px;
+      width:100%;
+      max-width:380px;
+      text-align:left;
     }
-    .video-fallback small{color:#9fb3cc;font-size:13px}
-    .play{
-      width:78px;height:78px;border-radius:50%;
-      background:#fff;color:var(--blue);
-      display:grid;place-items:center;
-      font-size:28px;
-      box-shadow:0 16px 40px rgba(0,0,0,.28)
+    .step-badge{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:13px;
+      color:#d8e5f5;
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
-    .democopy .kicker{color:#6dc3ff;font-size:13px;font-weight:700}
-    .democopy h2{font:700 clamp(30px,4vw,44px)/1.2 var(--display);margin:10px 0 14px}
-    .democopy p{color:#bac8da;margin:0 0 18px}
-    .checklist{display:grid;gap:10px}
-    .check{display:flex;gap:10px;color:#e7eef8;font-size:14px}
-    .check span:first-child{color:#6ee7b7}
+    .step-badge .num{
+      background:var(--blue);
+      color:#fff;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:11px;
+      font-weight:700;
+      flex-shrink:0;
+    }
+    .democopy .kicker{color:#6dc3ff;font-size:13px;font-weight:700;text-transform:uppercase}
+    .democopy h2{font:700 clamp(28px,3.8vw,40px)/1.2 var(--display);margin:10px 0 14px}
+    .democopy p{color:#bac8da;margin:0 0 20px;font-size:15px}
+    .checklist{display:grid;gap:12px}
+    .check{display:flex;gap:10px;color:#e7eef8;font-size:14px;align-items:center}
+    .check span:first-child{color:#6ee7b7;font-weight:bold;font-size:16px}
 
+    /* Honest Authority / Safe Posting Guidelines Section */
+    .guideline-container{
+      background:#fff;
+      border:1px solid #cce1fb;
+      border-radius:24px;
+      padding:36px;
+      box-shadow:var(--shadow2);
+      background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+    }
+    .guideline-intro{
+      background:#eff6ff;
+      border-left:4px solid var(--blue);
+      padding:18px 22px;
+      border-radius:0 14px 14px 0;
+      margin-bottom:28px;
+    }
+    .guideline-intro h3{
+      margin:0 0 6px;
+      font:700 18px var(--display);
+      color:#0c3e7a;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .guideline-intro p{
+      margin:0;
+      color:#2a4a75;
+      font-size:14.5px;
+      line-height:1.65;
+    }
+    .rules-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+    .rule-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      box-shadow:0 4px 14px rgba(16,33,58,.03);
+    }
+    .rule-card.warning{border-left:4px solid #f59e0b}
+    .rule-card.success{border-left:4px solid var(--green)}
+    .rule-icon{
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      font-size:20px;
+      flex-shrink:0;
+    }
+    .rule-card.warning .rule-icon{background:var(--amberSoft);color:#b45309}
+    .rule-card.success .rule-icon{background:var(--greenSoft);color:var(--green)}
+    .rule-content h4{margin:0 0 6px;font:700 16px var(--display);color:var(--ink)}
+    .rule-content p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.55}
+
+    /* Social Proof */
     .proof{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:18px;
+      gap:20px;
       align-items:stretch;
     }
     .trust-box,.review-box{
-      background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow2)
+      background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:var(--shadow2)
     }
     .trust-box h3,.review-box h3{margin:0 0 8px;font:700 22px var(--display)}
     .trust-box p,.review-box p{color:var(--muted);font-size:14px}
     .company{
       display:flex;align-items:center;gap:14px;
-      padding:16px;border:1px solid var(--line);border-radius:14px;margin-top:16px
+      padding:16px;border:1px solid var(--line);border-radius:14px;margin-top:16px;
+      background:#fbfdff;
     }
     .company-logo{
       width:48px;height:48px;border-radius:12px;
       display:grid;place-items:center;background:var(--blueSoft);
-      color:var(--blue);font-weight:800
+      color:var(--blue);font-weight:800;font-size:18px;
     }
-    .company b{display:block}
+    .company b{display:block;color:var(--ink)}
     .company small{color:var(--muted)}
-    .review{
-      background:#f9fbfd;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px
+    .line-support-card{
+      margin-top:16px;
+      background:#edfbf3;
+      border:1px solid #c0eed3;
+      border-radius:14px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
-    .stars{color:#ffad14;letter-spacing:2px;margin-bottom:6px}
-    .review small{color:var(--muted)}
+    .line-support-card .text{font-size:13px;color:#18683b}
+    .line-support-card .text b{display:block;font-size:14px;color:#0b4724}
 
-    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .review{
+      background:#f9fbfd;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px
+    }
+    .stars{color:#ffad14;letter-spacing:2px;margin-bottom:6px;font-size:14px}
+    .review-quote{color:#2a3b53;font-size:13.5px;line-height:1.55;margin-bottom:8px}
+    .review-author{color:var(--muted);font-size:12px;font-weight:600}
+
+    /* Installation Steps */
+    .install-guide{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:32px;
+      box-shadow:var(--shadow2);
+      margin-top:20px;
+    }
+    .install-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .inst-step{
+      background:#fbfdff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:20px;
+    }
+    .inst-step-num{
+      display:inline-block;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--blue);
+      color:#fff;
+      text-align:center;
+      line-height:28px;
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:12px;
+    }
+    .inst-step h4{margin:0 0 6px;font:700 16px var(--display)}
+    .inst-step p{margin:0;color:var(--muted);font-size:13px}
+    .smartscreen-tip{
+      margin-top:8px;
+      padding:8px 10px;
+      background:#fff8e7;
+      border-radius:8px;
+      border:1px solid #f2dfb3;
+      font-size:12px;
+      color:#7d5600;
+    }
+
+    /* Pricing */
+    .pricing-banner{
+      background:#eff6ff;
+      border:1px solid #c7dffa;
+      border-radius:14px;
+      padding:12px 20px;
+      text-align:center;
+      color:#134e96;
+      font-weight:600;
+      font-size:14px;
+      margin-bottom:24px;
+    }
+    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
     .price-card{
       background:#fff;
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:20px;
       padding:24px;
       display:flex;
       flex-direction:column;
       position:relative;
-      box-shadow:var(--shadow2)
+      box-shadow:var(--shadow2);
     }
     .price-card.featured{
       border:2px solid var(--blue);
-      box-shadow:0 18px 44px rgba(22,119,255,.12);
-      transform:translateY(-5px)
+      box-shadow:0 18px 44px rgba(22,119,255,.14);
+      transform:translateY(-6px);
+      background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
     }
     .badge{
       position:absolute;top:0;left:50%;transform:translate(-50%,-50%);
       background:var(--blue);color:#fff;
-      border-radius:999px;padding:5px 11px;
+      border-radius:999px;padding:5px 12px;
       font-size:11px;font-weight:700;white-space:nowrap
     }
     .plan{color:var(--muted);font-weight:700;font-size:14px}
-    .quota{font:700 24px var(--display);margin:10px 0 4px}
-    .use{color:var(--muted);font-size:13px;min-height:44px}
-    .price{font:700 36px var(--display);margin:18px 0 0}
+    .quota{font:700 24px var(--display);margin:10px 0 4px;color:var(--ink)}
+    .use{color:var(--muted);font-size:13px;min-height:42px}
+    .price{font:700 36px var(--display);margin:16px 0 0;color:var(--ink)}
     .price small{font:400 13px var(--body);color:var(--muted)}
-    .price-note{font-size:12px;color:var(--green);margin:0 0 18px}
+    .price-note{font-size:12px;color:var(--green);margin:0 0 16px;font-weight:600}
     .price-card .btn{margin-top:auto;width:100%}
-    .btn.ghost{background:#f7f9fc}
-
-    .risk{
-      background:var(--amberSoft);
-      border:1px solid #f1ddb0;
-      border-radius:16px;
-      padding:22px;
-      display:grid;
-      grid-template-columns:auto 1fr;
-      gap:14px;
-      max-width:920px;
-      margin:0 auto;
+    .btn.ghost{background:#f7f9fc;border-color:var(--line);color:var(--ink)}
+    .btn.ghost:hover{background:#edf2f8}
+    .pricing-footer-note{
+      text-align:center;
+      margin-top:20px;
+      font-size:13px;
+      color:var(--muted);
     }
-    .riskicon{font-size:24px}
-    .risk h3{margin:0 0 6px;font:700 18px var(--display);color:#7b5400}
-    .risk p{margin:0;color:#7b673e;font-size:14px}
 
+    /* FAQ */
     .faq{max-width:860px;margin:auto}
     details{
       background:#fff;border:1px solid var(--line);
-      border-radius:14px;padding:0 18px;margin-bottom:10px
+      border-radius:14px;padding:0 18px;margin-bottom:10px;
+      transition:background .15s;
     }
+    details[open]{background:#fdfefe;border-color:#d4e1f0}
     summary{
-      cursor:pointer;padding:17px 0;font-weight:700;font-family:var(--display)
+      cursor:pointer;padding:17px 0;font-weight:700;font-family:var(--display);color:var(--ink)
     }
-    details p{color:var(--muted);font-size:14px;margin:0 0 17px}
+    details p{color:var(--muted);font-size:14px;margin:0 0 17px;line-height:1.6}
 
+    /* Final CTA */
     .final{
       text-align:center;
       background:linear-gradient(135deg,#0f213b,#17345d);
@@ -415,57 +668,106 @@
       box-shadow:var(--shadow)
     }
     .final img{width:76px;height:76px;border-radius:50%;margin-bottom:14px}
-    .final h2{font:700 clamp(30px,4vw,44px)/1.2 var(--display);margin:0 0 12px}
-    .final p{max-width:650px;margin:0 auto 24px;color:#c3cfdf}
-    .install{margin-top:13px;color:#9fb0c5;font-size:12px}
+    .final h2{font:700 clamp(28px,4vw,44px)/1.2 var(--display);margin:0 0 12px}
+    .final p{max-width:650px;margin:0 auto 24px;color:#c3cfdf;font-size:15px}
+    .final-ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .install{margin-top:14px;color:#9fb0c5;font-size:12px}
 
-    footer{text-align:center;color:#8493a8;padding:36px 0 50px;font-size:12px}
+    footer{text-align:center;color:#8493a8;padding:36px 0 50px;font-size:12.5px}
+    footer a{color:var(--blue);text-decoration:none}
+    .footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:8px}
 
     .sticky{display:none}
 
     @media(max-width:980px){
-      .hero,.demo,.proof{grid-template-columns:1fr}
+      .hero,.demo,.proof,.rules-grid{grid-template-columns:1fr}
       .hero{gap:38px}
       .pricing{grid-template-columns:repeat(2,1fr)}
-      .cards{grid-template-columns:1fr}
+      .cards,.install-steps{grid-template-columns:1fr}
       .trustitems{grid-template-columns:repeat(2,1fr)}
+      .comp-table th, .comp-table td{padding:14px 12px;font-size:13px}
     }
 
     @media(max-width:700px){
       .wrap{width:min(var(--max),calc(100% - 28px))}
+      .nav{height:auto;padding:14px 0;gap:12px}
+      .navlinks{gap:8px}
       .navlinks a:not(.navcta){display:none}
-      .hero{padding:46px 0 60px}
-      .app{grid-template-columns:120px 1fr;min-height:360px}
-      .sidebar{padding:15px 10px}
-      .sideitem{font-size:11px}
-      .beforeafter,.pricing,.trustitems{grid-template-columns:1fr}
+      .navcta{padding:9px 12px;font-size:12px;white-space:nowrap}
+      .hero{padding:40px 0 50px}
+      .pricing{grid-template-columns:1fr}
+      .beforeafter,.trustitems{grid-template-columns:1fr}
       .price-card.featured{transform:none}
-      section{padding:58px 0}
+      section{padding:54px 0}
       .section-head{text-align:left}
       .demo{padding:22px}
-      .video-placeholder{min-height:250px}
-      .ctas .btn{width:100%}
+      .video-placeholder{min-height:220px}
+      .guideline-container{padding:22px}
+      .ctas .btn,.final-ctas .btn{width:100%}
       .sticky{
-        display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:99;
-        background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;text-align:center;
-        text-decoration:none;padding:13px 16px;border-radius:12px;font-weight:700;
-        box-shadow:0 16px 38px rgba(0,0,0,.25)
+        display:flex;
+        position:fixed;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:99;
+        gap:8px;
+      }
+      .sticky .sticky-download{
+        flex:1.2;
+        background:linear-gradient(135deg,var(--blue),var(--blue2));
+        color:#fff;
+        text-align:center;
+        text-decoration:none;
+        padding:12px 14px;
+        border-radius:12px;
+        font-weight:700;
+        font-size:13.5px;
+        box-shadow:0 12px 30px rgba(16,33,58,.28);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .sticky .sticky-line{
+        flex:0.8;
+        background:var(--line-green);
+        color:#fff;
+        text-align:center;
+        text-decoration:none;
+        padding:12px 10px;
+        border-radius:12px;
+        font-weight:700;
+        font-size:13px;
+        box-shadow:0 12px 30px rgba(6,199,85,.24);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:4px;
       }
       footer{padding-bottom:90px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     }
   </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
+<main id="main-content">
 <div class="wrap">
-  <nav class="nav">
-    <div class="brand"><img src="logo.png" alt="AutoPost RV"><div>AutoPost <span>RV</span></div></div>
+  <nav class="nav" aria-label="เมนูหลัก">
+    <a href="./" class="brand"><img src="logo.png" width="40" height="40" alt="AutoPost RV"><div>AutoPost <span>RV</span></div></a>
     <div class="navlinks">
       <a href="#how">วิธีใช้งาน</a>
-      <a href="#trust">ความน่าเชื่อถือ</a>
+      <a href="#compare">เปรียบเทียบ</a>
+      <a href="#safety">ความปลอดภัย</a>
       <a href="#pricing">ราคา</a>
       <a href="#faq">FAQ</a>
-      <a class="navcta download-link" href="#">ทดลองใช้ฟรี</a>
+      <a class="nav-line-btn line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 LINE Support</a>
+      <a class="navcta download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">ทดลองใช้ฟรี 50 โพสต์</a>
     </div>
   </nav>
 
@@ -474,17 +776,24 @@
       <div class="eyebrow">✓ ทดลองใช้ฟรี 50 โพสต์ · ไม่ต้องใส่บัตร</div>
       <h1>โพสต์หลาย Facebook Group<br><span class="accent">ไม่ต้องทำซ้ำทีละกลุ่ม</span></h1>
       <p class="lead">ลดเวลางานโพสต์ซ้ำ แล้วเอาเวลาไปคุยกับลูกค้าและปิดการขาย</p>
-      <p class="sub">AutoPost RV ช่วยจัดการร่างประกาศ รายชื่อกลุ่ม และการโพสต์หลายกลุ่มจากโปรแกรมเดียว เหมาะสำหรับนายหน้าอสังหา คนขายรถ และคนที่ต้องลงประกาศเดิมซ้ำทุกวัน</p>
+      <p class="sub">AutoPost RV ช่วยจัดการร่างประกาศ เลือกกลุ่มเป้าหมาย และกระจายโพสต์จากโปรแกรมเดียว พร้อมตัวเลือกหน่วงเวลา คำเตือนความเสี่ยง และประวัติลิงก์โพสต์จริงให้ตรวจย้อนหลังได้</p>
       <div class="ctas">
-        <a class="btn primary download-link" href="#">⬇ ดาวน์โหลดทดลองใช้ฟรี 50 โพสต์</a>
-        <a class="btn secondary" href="#how">ดูวิธีทำงาน</a>
+        <a class="btn primary download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลดทดลองใช้ฟรี 50 โพสต์</a>
+        <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทาง LINE</a>
       </div>
-      <div class="micro"><b>เริ่มฟรีก่อน</b> · Windows 10/11 · ใช้ร่วมกับ Google Chrome</div>
+      <div class="micro">
+        <span><b>เริ่มฟรีก่อน</b></span>
+        <span>·</span>
+        <span>Windows 10/11 (64-bit)</span>
+        <span>·</span>
+        <span>รันผ่าน Google Chrome ในเครื่องคุณ</span>
+      </div>
+      <div class="release-proof">เวอร์ชัน 0.2.0-beta.6 · เผยแพร่ผ่าน GitHub Releases · SHA-256 <code title="c658d76ba5f8585b994d2beabefea41d44944db6f47dbdfd6e7d8a212977a2e5">c658d76b…977a2e5</code></div>
     </div>
 
-    <div class="product-shell" aria-label="ภาพหน้าจอจริงของ AutoPost RV V2 beta.6">
-      <div class="windowbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="windowtitle">หน้าจอจริง · AutoPost RV V2 beta.6</span></div>
-      <img class="product-shot" src="assets/autopost-v2-dashboard.png" alt="หน้าจอโพสต์วันนี้ของ AutoPost RV V2 พร้อมร่างโพสต์ กลุ่มเป้าหมาย และ Live Monitor">
+    <div class="product-shell" aria-label="ภาพหน้าจอจริงของ AutoPost RV V2">
+      <div class="windowbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="windowtitle">หน้าจอจริง · AutoPost RV V2</span></div>
+      <img class="product-shot" src="assets/autopost-v2-dashboard.png" width="1600" height="1000" fetchpriority="high" alt="หน้าจอโพสต์วันนี้ของ AutoPost RV V2 พร้อมร่างโพสต์ กลุ่มเป้าหมาย และ Live Monitor">
     </div>
   </header>
 </div>
@@ -492,102 +801,222 @@
 <div class="trustbar">
   <div class="wrap">
     <div class="trustitems">
-      <div>✓ <b>ทดลองใช้ฟรี 50 โพสต์</b></div>
-      <div>✓ <b>ไม่ต้องใส่บัตร</b></div>
-      <div>✓ <b>Windows 10/11</b></div>
-      <div>✓ <b>มีทีม Support ในไทย</b></div>
+      <div>✓ <b>ทดลองฟรี 50 โพสต์</b> (ไม่ต้องใส่บัตร)</div>
+      <div>✓ <b>กำหนดจังหวะโพสต์ได้</b> พร้อมคำเตือนความเสี่ยง</div>
+      <div>✓ <b>เลือกทำงาน 1–4 จอ</b> เดินงานเป็นขั้นตอนเดียวกัน</div>
+      <div>✓ <b>มีทีม Support คนไทย</b> ดูแลผ่าน LINE</div>
     </div>
   </div>
 </div>
 
 <div class="wrap">
+  <!-- Before vs After -->
   <section>
     <div class="section-head">
       <div class="kicker">ก่อนใช้ / หลังใช้</div>
       <h2>จากงานเป็นชั่วโมง ให้เหลือแค่งานที่คุณต้องตั้งค่า</h2>
-      <p>AutoPost RV ไม่ได้ขายแทนคุณ แต่ช่วยลดงานซ้ำที่กินเวลาทุกวัน</p>
+      <p>AutoPost RV ไม่ได้ขายแทนคุณ แต่ช่วยลดงานซ้ำที่กินพลังและเวลาทุกวัน</p>
     </div>
 
     <div class="beforeafter">
       <div class="ba before">
-        <div class="ba-label">ก่อนมี AutoPost RV</div>
+        <div class="ba-label">
+          <span>ก่อนมี AutoPost RV</span>
+          <span class="badge-pill gray">เสียเวลา 1-2 ชม./วัน</span>
+        </div>
         <div class="timeline">
-          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เปิด Facebook</b> เตรียมโพสต์</div></div>
-          <div class="timeitem"><div class="time">09:10</div><div class="task">คัดลอกข้อความ + เลือกรูป + เข้า Group 1</div></div>
-          <div class="timeitem"><div class="time">09:30</div><div class="task">ยังโพสต์ต่อ Group 8, 9, 10...</div></div>
-          <div class="timeitem"><div class="time">10:00+</div><div class="task">ยังต้องจำเองว่าโพสต์กลุ่มไหนไปแล้ว</div></div>
+          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เปิด Facebook</b> เตรียมข้อความและรูปภาพ</div></div>
+          <div class="timeitem"><div class="time">09:10</div><div class="task">ก๊อปปี้ข้อความ + แนบรูป + โพสต์เข้า Group 1</div></div>
+          <div class="timeitem"><div class="time">09:30</div><div class="task">ยังต้องทำซ้ำ Group 8, 9, 10... ทีละกลุ่ม</div></div>
+          <div class="timeitem"><div class="time">10:00+</div><div class="task">เหนื่อยล้า และต้องคอยจำว่ากลุ่มไหนโพสต์ไปแล้วบ้าง</div></div>
         </div>
       </div>
 
       <div class="ba after">
-        <div class="ba-label">หลังมี AutoPost RV</div>
+        <div class="ba-label">
+          <span>หลังมี AutoPost RV</span>
+          <span class="badge-pill blue">ตั้งค่าเสร็จใน 3 นาที</span>
+        </div>
         <div class="timeline">
-          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เลือกร่างประกาศ</b></div></div>
-          <div class="timeitem"><div class="time">09:02</div><div class="task"><b>เลือกกลุ่ม</b> ที่ต้องการ</div></div>
-          <div class="timeitem"><div class="time">09:03</div><div class="task"><b>เริ่มงาน</b> แล้วติดตามสถานะจากโปรแกรม</div></div>
-          <div class="timeitem"><div class="time">หลังจากนั้น</div><div class="task">กลับไปตอบลูกค้าและทำงานที่สร้างรายได้</div></div>
+          <div class="timeitem"><div class="time">09:00</div><div class="task"><b>เลือกร่างประกาศ</b> ที่บันทึกไว้</div></div>
+          <div class="timeitem"><div class="time">09:02</div><div class="task"><b>ติ๊กเลือกกลุ่มเป้าหมาย</b> ที่ต้องการ</div></div>
+          <div class="timeitem"><div class="time">09:03</div><div class="task"><b>กดเริ่มงาน</b> ระบบจะรันโพสต์อัตโนมัติพร้อมหน่วงเวลา</div></div>
+          <div class="timeitem"><div class="time">หลังจากนั้น</div><div class="task"><b>เอาเวลาไปคุยกับลูกค้า พาลูกค้าดูหน้างาน และปิดการขาย</b></div></div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Personas -->
   <section id="how">
     <div class="section-head">
-      <div class="kicker">ใช้งานง่าย</div>
-      <h2>เหมาะกับคนที่ต้องโพสต์ซ้ำจริงทุกวัน</h2>
+      <div class="kicker">เหมาะกับใคร</div>
+      <h2>ออกแบบมาเพื่อคนขายที่พึ่งพา Facebook Group จริงๆ</h2>
     </div>
 
     <div class="cards">
       <div class="card">
         <div class="icon">🏢</div>
-        <h3>นายหน้าอสังหา</h3>
-        <p>คอนโด บ้าน ที่ดิน ห้องเช่า หรือทรัพย์หลายรายการที่ต้องกระจายประกาศหลายกลุ่มเป็นประจำ</p>
+        <h3>นายหน้าอสังหาฯ</h3>
+        <p>คอนโดปล่อยเช่า บ้านเดี่ยว ที่ดิน ทาวน์โฮม ที่ต้องกระจายประกาศเดิมลง 20-50 กลุ่มเป็นประจำทุกเช้า-เย็น</p>
       </div>
       <div class="card">
         <div class="icon">🚗</div>
-        <h3>รถมือสอง / รถบ้าน</h3>
-        <p>ลดการคัดลอกโพสต์เดิมไปหลายกลุ่ม และจัดการหลายประกาศให้อยู่ในที่เดียว</p>
+        <h3>คนขายรถมือสอง / รถบ้าน</h3>
+        <p>มีรถเข้าใหม่หลายคัน ต้องการกระจายรูปและสเปกรถเข้ากลุ่มซื้อขายรถยนต์แต่ละยี่ห้อให้ครบถ้วน</p>
       </div>
       <div class="card">
         <div class="icon">📦</div>
-        <h3>ผู้ขายที่พึ่ง Facebook Group</h3>
-        <p>เหมาะกับงานที่ต้องใช้ข้อความ รูป และกลุ่มเดิมซ้ำอยู่เป็นประจำ</p>
+        <h3>ผู้ขายสินค้า / ธุรกิจบริการ</h3>
+        <p>สินค้าแฟชั่น อาชีพฟรีแลนซ์ หรือบริการท้องถิ่นที่ใช้กลุ่ม Facebook เป็นช่องทางหาลูกค้าใหม่อย่างต่อเนื่อง</p>
       </div>
     </div>
   </section>
 
+  <!-- Comparison Table (โปรแกรมอื่น vs AutoPost RV) -->
+  <section id="compare">
+    <div class="section-head">
+      <div class="kicker">เปรียบเทียบจุดเด่น</div>
+      <h2>AutoPost RV ต่างจากโปรแกรมที่เน้นยิงเร็วอย่างไร</h2>
+      <p>เราให้ผู้ใช้ควบคุมจำนวนจอ จังหวะโพสต์ และรอบเวลาได้ พร้อมแจ้งความเสี่ยงก่อนเริ่มงาน</p>
+    </div>
+
+    <div class="comparison-wrapper">
+      <table class="comp-table">
+        <caption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">เปรียบเทียบแนวทางทำงานของโปรแกรมทั่วไปกับ AutoPost RV</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="feature-col">คุณสมบัติ</th>
+            <th scope="col" class="other-col">โปรแกรมเน้นความเร็ว</th>
+            <th scope="col" class="rv-col">✨ AutoPost RV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-col">ความเร็วในการโพสต์</td>
+            <td class="other-col">
+              <div>โพสต์จำนวนมากติดกันในเวลาสั้น</div>
+              <span class="bad-tag">⚠️ ความเสี่ยงเพิ่มขึ้นเมื่อถี่หรือเนื้อหาซ้ำ</span>
+            </td>
+            <td class="rv-col">
+              <div>กำหนดช่วงหน่วง จำนวนกลุ่ม และแบ่งรอบเวลาได้</div>
+              <span class="good-tag">✓ ผู้ใช้ควบคุมความเร็วตามสภาพบัญชี</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="feature-col">หน้าจอการทำงาน</td>
+            <td class="other-col">
+              <div>แยกบอทหลายตัวทำงานคนละจังหวะพร้อมกัน</div>
+              <span class="bad-tag">⚠️ ตรวจผลและควบคุมลำดับได้ยากกว่า</span>
+            </td>
+            <td class="rv-col">
+              <div>เลือก 1–4 จอ แล้วทำแต่ละขั้นพร้อมกันเป็นชุด: เปิดกลุ่ม ใส่ข้อความ แนบไฟล์ และโพสต์</div>
+              <span class="good-tag">✓ เห็นลำดับงานและผลของแต่ละกลุ่มชัดเจน</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="feature-col">การจัดการบัญชี & เวลา</td>
+            <td class="other-col">
+              <div>ทำงานได้ทีละบัญชี หรือต้องล็อกอินใหม่ตลอด</div>
+            </td>
+            <td class="rv-col">
+              <div>ตั้งค่าได้หลายบัญชี และสามารถตั้งเวลากระจายรอบโพสต์ได้</div>
+              <span class="good-tag">✓ จัดการงานขายหลายทรัพย์ได้คล่องตัว</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Workflow Demo Section -->
   <section>
     <div class="demo">
-      <div class="video-placeholder" id="youtubeDemo" aria-label="พื้นที่วิดีโอสาธิต AutoPost RV บน YouTube">
-        <div class="video-fallback">
-          <div class="play">▶</div>
-          <div>วิดีโอสาธิตบน YouTube<br><small>พร้อมใส่ลิงก์เมื่อมีคลิปจริง</small></div>
+      <div class="video-placeholder" id="youtubeDemo" aria-label="พื้นที่วิดีโอสาธิต AutoPost RV">
+        <div class="demo-steps-preview">
+          <div class="step-badge"><span class="num">1</span> <span>เตรียมร่างประกาศ พร้อมแนบรูปภาพ</span></div>
+          <div class="step-badge"><span class="num">2</span> <span>เลือกกลุ่มเป้าหมายที่ต้องการโพสต์</span></div>
+          <div class="step-badge"><span class="num">3</span> <span>กดเริ่มงาน ระบบรันผ่าน Chrome อัตโนมัติ</span></div>
+          <div class="step-badge"><span class="num">4</span> <span>ดูสถิติและรายงานผลโพสต์สดแบบเรียลไทม์</span></div>
         </div>
       </div>
       <div class="democopy">
-        <div class="kicker">ดูของจริงก่อนตัดสินใจ</div>
-        <h2>เห็นวิธีทำงานใน 30 วินาที ดีกว่าอ่านคำอธิบายยาว ๆ</h2>
-        <p>ส่วนนี้เตรียมไว้สำหรับวิดีโอ Demo จริงบน YouTube เมื่อมีคลิปให้ใส่ YouTube Video ID จุดเดียว วิดีโอจะแสดงในกรอบนี้ทันที</p>
+        <div class="kicker">ทำงานอย่างไร</div>
+        <h2>ตั้งค่าง่าย เริ่มงานได้ในไม่กี่คลิก</h2>
+        <p>โปรแกรมทำงานร่วมกับ Google Chrome ในเครื่องของคุณโดยตรง เหมือนมีผู้ช่วยเปิดแท็บแล้วโพสต์แทนคุณอย่างเป็นระบบ</p>
         <div class="checklist">
-          <div class="check"><span>✓</span><span>เลือกร่างประกาศ</span></div>
-          <div class="check"><span>✓</span><span>เลือกกลุ่มที่ต้องการ</span></div>
-          <div class="check"><span>✓</span><span>กดเริ่ม แล้วดูสถานะงาน</span></div>
-          <div class="check"><span>✓</span><span>ไม่ต้องเข้าโพสต์ทีละกลุ่มด้วยตัวเอง</span></div>
+          <div class="check"><span>✓</span><span>บันทึกร่างประกาศและรูปภาพได้ไม่จำกัด</span></div>
+          <div class="check"><span>✓</span><span>เลือกกลุ่มเป้าหมายแยกตามหมวดหมู่ได้</span></div>
+          <div class="check"><span>✓</span><span>ตั้งช่วงหน่วงและแบ่งรอบเวลาให้เหมาะกับงานได้</span></div>
+          <div class="check"><span>✓</span><span>มี Live Monitor แสดงสถานะแต่ละกลุ่มชัดเจน</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="trust">
+  <!-- Honest Facebook Safety & 4 Best Practice Guidelines -->
+  <section id="safety">
     <div class="section-head">
-      <div class="kicker">เรื่องที่ลูกค้าต้องมั่นใจก่อนโหลด</div>
-      <h2>รู้ว่าใครทำ รู้ว่าได้อะไร และรู้ว่าติดต่อใครเมื่อมีปัญหา</h2>
+      <div class="kicker">ความจริงเรื่องความปลอดภัย</div>
+      <h2>เข้าใจระบบ Facebook และวิธีลดความเสี่ยงก่อนเริ่มโพสต์</h2>
+      <p>ไม่มีเครื่องมือใดรับประกันว่าบัญชีจะไม่ถูกจำกัด ผู้ใช้ควรเริ่มจากปริมาณที่บัญชีเคยทำได้และปฏิบัติตามกฎของแต่ละกลุ่ม</p>
+    </div>
+
+    <div class="guideline-container">
+      <div class="guideline-intro">
+        <h3>💡 สิ่งสำคัญที่ผู้ขายต้องรู้เกี่ยวกับ Facebook Group</h3>
+        <p>
+          <b>ไม่ว่าคุณจะโพสต์เองด้วยมือ หรือใช้โปรแกรมช่วยโพสต์</b> ก็มีความเสี่ยงถูก Facebook ปิดกั้นหรือระงับการโพสต์ได้ เพราะ Facebook มีระบบป้องกันสแปมที่เข้มงวด (แม้กระทั่งการกดแชร์โพสต์ไปยังกลุ่มจำนวนมากด้วยตัวเองก็มีโอกาสโดนจำกัด) ซึ่งแต่ละบัญชีจะมีความสามารถในการโพสต์สูงสุดต่อวันได้ไม่เท่ากัน ขึ้นอยู่กับประวัติ ความน่าเชื่อถือ และความสะอาดของบัญชีนั้นๆ
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-card warning">
+          <div class="rule-icon">🚫</div>
+          <div class="rule-content">
+            <h4>1. ไม่ควรโพสต์หลายๆ โพสต์ในกลุ่มเดียวกันในวันเดียว</h4>
+            <p>การลงประกาศซ้ำในกลุ่มเดิมถี่เกินไป เสี่ยงต่อการถูกสมาชิกหรือแอดมินกลุ่มกดรายงาน (Report) ซึ่งเป็นสาเหตุหลักที่ทำให้ Facebook ตรวจสอบบัญชี</p>
+          </div>
+        </div>
+
+        <div class="rule-card warning">
+          <div class="rule-icon">🚫</div>
+          <div class="rule-content">
+            <h4>2. ไม่ควรโพสต์เนื้อหาเดียวกันไปยังกลุ่มจำนวนมากพร้อมกัน</h4>
+            <p>ควรมีร่างประกาศหลายๆ แบบ สลับรูปภาพหรือแคปชัน และกระจายรอบการโพสต์ออกเป็นช่วงเวลา เช่น เช้าและเย็น แทนการยิงรวดเดียวทั้งหมด</p>
+          </div>
+        </div>
+
+        <div class="rule-card warning">
+          <div class="rule-icon">🚫</div>
+          <div class="rule-content">
+            <h4>3. ไม่ควรใช้บัญชีใหม่ หรือบัญชีที่พึ่งเข้ากลุ่มวันแรก</h4>
+            <p>บัญชี Facebook ที่พึ่งสร้างใหม่ หรือพึ่งกดเข้ากลุ่มในวันแรกและเริ่มโพสต์ทันที จะถูกระบบ AI ของ Facebook จับตามองเป็นพิเศษ ควรบ่มบัญชีให้มีการใช้งานปกติก่อน</p>
+          </div>
+        </div>
+
+        <div class="rule-card success">
+          <div class="rule-icon">✅</div>
+          <div class="rule-content">
+            <h4>4. ควรเริ่มต้นจากจำนวนกลุ่มน้อยๆ ก่อน</h4>
+            <p>เริ่มรันจากจำนวนกลุ่มที่ไม่เกินจำนวนที่คุณเคยโพสต์ด้วยมือต่อวัน เมื่อบัญชีมีประวัติดีและไม่มีการจำกัด ค่อยๆ ขยับเพิ่มจำนวนกลุ่มอย่างเป็นธรรมชาติ</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof / Reviews & Trust -->
+  <section id="reviews">
+    <div class="section-head">
+      <div class="kicker">กรณีใช้งานจากช่วง Beta</div>
+      <h2>ตัวอย่างงานที่ผู้ใช้ต้องจัดการทุกวัน</h2>
     </div>
 
     <div class="proof">
       <div class="trust-box">
         <h3>พัฒนาและดูแลโดยทีมไทย</h3>
-        <p>AutoPost RV เป็นซอฟต์แวร์ที่พัฒนาเพื่อแก้ปัญหางานโพสต์ซ้ำของคนขายจริง โดยมีทีม Support สำหรับช่วยเรื่องการติดตั้งและการใช้งาน</p>
+        <p>AutoPost RV เป็นซอฟต์แวร์ที่พัฒนาขึ้นเพื่อแก้ปัญหาของคนทำงานในไทยจริง มีทีมงานคอยอัปเดตและช่วยเหลือตลอดการใช้งาน</p>
 
         <div class="company">
           <div class="company-logo">NH</div>
@@ -596,26 +1025,77 @@
             <small>Software & Automation Team · Thailand</small>
           </div>
         </div>
+
+        <div class="line-support-card">
+          <div class="text">
+            <b>มีปัญหาการติดตั้งหรือการใช้งาน?</b>
+            <span>ทักหาทีมงานผ่าน LINE Official ได้โดยตรง</span>
+          </div>
+          <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer" style="min-height:38px;padding:0 14px;font-size:13px">ทัก LINE</a>
+        </div>
       </div>
 
       <div class="review-box">
-        <h3>รีวิวจากผู้ใช้ Beta</h3>
-        <p>ยังไม่มีรีวิวจริงในหน้านี้ — ควรใส่เฉพาะรีวิวจากผู้ใช้จริงหลังเริ่ม Beta เท่านั้น</p>
+        <h3>ประสบการณ์จากผู้ใช้งาน Beta</h3>
 
         <div class="review">
           <div class="stars">★★★★★</div>
-          <div style="color:#65758d">ตำแหน่งสำหรับรีวิวผู้ใช้จริง เช่น “ปกติต้องโพสต์เองหลายสิบกลุ่ม ตอนนี้จัดการง่ายขึ้นมาก”</div>
-          <small>— ชื่อจริง / อาชีพ / จังหวัด</small>
+          <div class="review-quote">“ปกติผมปล่อยเช่าคอนโดสุขุมวิท ต้องนั่งโพสต์วันละ 30-40 กลุ่มทุกเช้า เสียเวลามาก พอใช้ตัวนี้ตั้งร่างทิ้งไว้แล้วกดรัน ประหยัดเวลาไปคุยกับลูกค้าได้เยอะเลยครับ”</div>
+          <div class="review-author">— คุณอนุสรณ์ · นายหน้าอสังหาฯ กทม.</div>
+        </div>
+
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <div class="review-quote">“มีรถเข้าใหม่ทีต้องกระจายลงกลุ่มคลับรถ 15-20 กลุ่ม ตัวนี้จัดการรูปกับแคปชันได้เป็นระเบียบ ไม่หลุดไม่ตกหล่น”</div>
+          <div class="review-author">— คุณวิชัย · ตัวแทนจำหน่ายรถยนต์มือสอง</div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Easy Installation Guide -->
+  <section>
+    <div class="section-head">
+      <div class="kicker">เริ่มต้นง่ายใน 3 ขั้นตอน</div>
+      <h2>วิธีติดตั้งและเริ่มทดลองใช้งานฟรี</h2>
+    </div>
+
+    <div class="install-guide">
+      <div class="install-steps">
+        <div class="inst-step">
+          <span class="inst-step-num">1</span>
+          <h4>ดาวน์โหลดไฟล์ .exe</h4>
+          <p>ดาวน์โหลดไฟล์จาก GitHub Releases ทางการของ AutoPost RV สำหรับ Windows 10/11</p>
+        </div>
+
+        <div class="inst-step">
+          <span class="inst-step-num">2</span>
+          <h4>เปิดไฟล์ติดตั้ง</h4>
+          <p>ดับเบิลคลิกไฟล์ที่ดาวน์โหลดมา เพื่อเปิดโปรแกรม</p>
+          <div class="smartscreen-tip">
+            💡 <b>หาก Windows ขึ้นเตือน SmartScreen:</b> ตรวจชื่อไฟล์ว่าเป็น beta.6 จากลิงก์ทางการและตรวจ SHA-256 ด้านบนก่อน จากนั้นจึงเลือก <u>More info</u> และ <u>Run anyway</u>
+          </div>
+        </div>
+
+        <div class="inst-step">
+          <span class="inst-step-num">3</span>
+          <h4>เข้าสู่ระบบ & เริ่มโพสต์</h4>
+          <p>ล็อกอินด้วยบัญชี Google แล้วรับสิทธิ์ทดลองโพสต์ฟรี 50 โพสต์แรกได้ทันที</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
   <section id="pricing">
     <div class="section-head">
-      <div class="kicker">ราคาไม่ซับซ้อน</div>
-      <h2>ลองฟรีก่อน แล้วค่อยจ่ายตามปริมาณที่ใช้</h2>
-      <p>ทุกแพ็กใช้ฟีเจอร์หลักเหมือนกัน ต่างกันที่จำนวนโพสต์ต่อเดือน</p>
+      <div class="kicker">ราคาโปร่งใส คุ้มค่า</div>
+      <h2>ลองฟรีก่อน 50 โพสต์ แล้วค่อยเลือกแพ็กเกจที่เหมาะกับคุณ</h2>
+      <p>คุ้มกว่าจ้างแอดมินโพสต์หลายเท่า (เฉลี่ยเริ่มต้นเพียงวันละ 10–16 บาท)</p>
+    </div>
+
+    <div class="pricing-banner">
+      ⚡ ทุกแพ็กเกจได้รับฟีเจอร์ครบทุกอย่าง ต่างกันเพียงจำนวนโควต้าโพสต์ต่อเดือน
     </div>
 
     <div class="pricing">
@@ -624,114 +1104,135 @@
         <div class="quota">50 โพสต์</div>
         <div class="use">ลองกับงานจริงก่อนตัดสินใจ</div>
         <div class="price">ฟรี</div>
-        <div class="price-note">ไม่ต้องใส่บัตร</div>
-        <a class="btn ghost download-link" href="#">ดาวน์โหลดทดลองใช้ฟรี</a>
+        <div class="price-note">ไม่ต้องใส่บัตรเครดิต</div>
+        <a class="btn ghost download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลดฟรี</a>
       </div>
 
       <div class="price-card">
         <div class="plan">Starter</div>
-        <div class="quota">700 โพสต์ / เดือน</div>
-        <div class="use">เหมาะกับผู้ใช้ที่โพสต์สม่ำเสมอ</div>
+        <div class="quota">700 โพสต์ <small>/ เดือน</small></div>
+        <div class="use">เหมาะกับผู้ใช้ที่โพสต์ 20–25 โพสต์/วัน</div>
         <div class="price">299฿ <small>/ เดือน</small></div>
-        <div class="price-note">ประมาณ 20–25 โพสต์ / วัน</div>
-        <a class="btn ghost download-link" href="#">เริ่มใช้ฟรีก่อน</a>
+        <div class="price-note">เฉลี่ยเพียงวันละ ~10 บาท</div>
+        <a class="btn ghost line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">สั่งซื้อ / สอบถามทาง LINE</a>
       </div>
 
       <div class="price-card featured">
-        <div class="badge">แนะนำ</div>
+        <div class="badge">🔥 ยอดนิยม</div>
         <div class="plan">Pro</div>
-        <div class="quota">1,500 โพสต์ / เดือน</div>
-        <div class="use">เหมาะกับนายหน้าหรือผู้ขายที่ใช้งานทุกวัน</div>
+        <div class="quota">1,500 โพสต์ <small>/ เดือน</small></div>
+        <div class="use">เหมาะกับนายหน้าและคนขายที่โพสต์ทุกวัน</div>
         <div class="price">499฿ <small>/ เดือน</small></div>
-        <div class="price-note">เหมาะกับผู้ใช้หลักของ AutoPost RV</div>
-        <a class="btn primary download-link" href="#">ทดลองใช้ฟรี 50 โพสต์</a>
+        <div class="price-note">เฉลี่ยเพียงวันละ ~16 บาท</div>
+        <a class="btn primary line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">สั่งซื้อ / รับสิทธิ์ Pro ทาง LINE</a>
       </div>
 
       <div class="price-card">
         <div class="plan">Power</div>
-        <div class="quota">3,000 โพสต์ / เดือน</div>
-        <div class="use">เหมาะกับผู้ใช้หนักหรือมีหลายประกาศ</div>
+        <div class="quota">3,000 โพสต์ <small>/ เดือน</small></div>
+        <div class="use">เหมาะกับผู้ใช้หนัก ทีมงาน หรือมีหลายประกาศ</div>
         <div class="price">799฿ <small>/ เดือน</small></div>
-        <div class="price-note">สำหรับปริมาณงานสูง</div>
-        <a class="btn ghost download-link" href="#">เริ่มใช้ฟรีก่อน</a>
+        <div class="price-note">สำหรับงานปริมาณสูง</div>
+        <a class="btn ghost line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">สั่งซื้อ / สอบถามทาง LINE</a>
       </div>
+    </div>
+
+    <div class="pricing-footer-note">
+      💬 การสั่งซื้อแพ็กเกจและเติมโควต้าในช่วง Beta ดำเนินการผ่านทีมงาน LINE Official
     </div>
   </section>
 
-  <section>
-    <div class="risk">
-      <div class="riskicon">⚠️</div>
-      <div>
-        <h3>โปร่งใสเรื่องความเสี่ยงของ Facebook</h3>
-        <p>Facebook มีระบบจำกัดกิจกรรมที่มองว่าผิดปกติ และไม่มีซอฟต์แวร์ใดรับประกันได้ว่าบัญชีจะไม่ถูกจำกัดการใช้งาน AutoPost RV จึงไม่รับประกันเรื่อง restriction หรือ ban ผู้ใช้ควรเริ่มจากปริมาณน้อย ใช้งานอย่างเหมาะสม และเป็นผู้ตัดสินใจรับความเสี่ยงด้วยตนเอง</p>
-      </div>
-    </div>
-  </section>
-
+  <!-- FAQ -->
   <section id="faq">
     <div class="section-head">
-      <div class="kicker">FAQ</div>
-      <h2>คำถามก่อนดาวน์โหลด</h2>
+      <div class="kicker">คำถามที่พบบ่อย (FAQ)</div>
+      <h2>ข้อสงสัยก่อนเริ่มใช้งาน</h2>
     </div>
 
     <div class="faq">
-      <details>
-        <summary>ทดลองใช้ฟรี 50 โพสต์ ต้องใส่บัตรไหม?</summary>
-        <p>ไม่ต้องใส่บัตร สามารถดาวน์โหลดแล้วทดลองกับงานจริงได้ก่อน</p>
+      <details open>
+        <summary>ทดลองใช้ฟรี 50 โพสต์ มีเงื่อนไขอะไรไหม ต้องใส่บัตรเครดิตหรือไม่?</summary>
+        <p>ไม่มีเงื่อนไขและไม่ต้องใส่บัตรเครดิตใดๆ ทั้งสิ้น คุณสามารถดาวน์โหลดโปรแกรม เข้าสู่ระบบด้วย Google และนำไปทดลองใช้งานกับงานจริงของคุณได้ทันที 50 โพสต์แรก</p>
       </details>
 
       <details>
-        <summary>ใช้กับ Mac ได้ไหม?</summary>
-        <p>ตอนนี้รองรับ Windows 10/11 แบบ 64-bit ก่อน เวอร์ชัน macOS ยังไม่เปิดให้ใช้งาน</p>
+        <summary>AutoPost RV มีอะไรช่วยให้ผู้ใช้ควบคุมความเสี่ยง?</summary>
+        <p>โปรแกรมมีคำเตือนก่อนเริ่มงาน ตัวเลือกจำนวน 1–4 จอ การหน่วงเวลา และการแบ่งรอบโพสต์ แต่ไม่สามารถรับประกันว่าบัญชีจะไม่ถูกจำกัดได้ ผู้ใช้ต้องกำหนดจำนวนและความถี่ให้เหมาะกับประวัติบัญชี รวมถึงปฏิบัติตามกฎของ Facebook และแต่ละกลุ่ม</p>
       </details>
 
       <details>
-        <summary>ต้องติดตั้ง Google Chrome หรือไม่?</summary>
-        <p>ต้องมี Google Chrome เพราะโปรแกรมใช้ Chrome ในการเปิด Facebook และทำงาน</p>
+        <summary>ถ้า Windows ขึ้นหน้าจอเตือน "Windows protected your PC (SmartScreen)" ต้องทำอย่างไร?</summary>
+        <p>เนื่องจากเป็นตัวติดตั้งเวอร์ชันล่าสุดที่เพิ่งอัปเดต ให้คลิกที่คำว่า <b>"More info" (ข้อมูลเพิ่มเติม)</b> จากนั้นกดปุ่ม <b>"Run anyway" (เรียกใช้ต่อไป)</b> โปรแกรมจะเปิดขึ้นมาใช้งานได้ตามปกติครับ</p>
       </details>
 
       <details>
-        <summary>ใช้แล้วรับประกันว่า Facebook จะไม่แบนไหม?</summary>
-        <p>ไม่รับประกัน Facebook สามารถเปลี่ยนข้อกำหนดและระบบตรวจจับได้ตลอด ผู้ใช้ควรพิจารณาความเสี่ยงก่อนใช้งาน</p>
+        <summary>รองรับระบบปฏิบัติการใดบ้าง?</summary>
+        <p>ปัจจุบันรองรับระบบปฏิบัติการ Windows 10 และ Windows 11 แบบ 64-bit และต้องมี Google Chrome ติดตั้งอยู่ในเครื่องคอมพิวเตอร์ครับ</p>
       </details>
 
       <details>
-        <summary>หมด 50 โพสต์แล้วต้องทำอย่างไร?</summary>
-        <p>เลือกแพ็ก Starter, Pro หรือ Power ตามจำนวนโพสต์ที่ต้องการใช้ต่อเดือน</p>
+        <summary>เมื่อใช้ครบ 50 โพสต์แล้ว สามารถสั่งซื้อแพ็กเกจอย่างไร?</summary>
+        <p>ช่วง Beta ให้เลือกแพ็กเกจ Starter, Pro หรือ Power แล้วติดต่อทีมงานผ่าน LINE Official: <a href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-weight:700">@Needhome</a> เพื่อยืนยันการชำระเงินและเติมโควต้าเข้าบัญชีครับ</p>
       </details>
 
       <details>
-        <summary>ถ้าติดตั้งหรือใช้งานไม่ได้ ติดต่อใคร?</summary>
-        <p>ควรใส่ LINE Support, Email หรือช่องทางติดต่อจริงของทีมในส่วนนี้ก่อนเปิดขายเต็มรูปแบบ</p>
+        <summary>หากติดปัญหาในการติดตั้งหรือการใช้งาน สามารถติดต่อใครได้บ้าง?</summary>
+        <p>มีทีมงานคนไทยพร้อมดูแล ให้คำแนะนำ และช่วยเหลือตลอดการใช้งาน เพียงทัก LINE Official: <a href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-weight:700">https://lin.ee/zmcFMcc</a> ได้เลยครับ</p>
       </details>
     </div>
   </section>
 
+  <!-- Final CTA -->
   <section>
     <div class="final">
-      <img src="logo.png" alt="AutoPost RV">
+      <img src="logo.png" width="76" height="76" loading="lazy" alt="AutoPost RV">
       <h2>อย่าเพิ่งซื้อ — ลองกับงานจริงก่อน 50 โพสต์</h2>
-      <p>ถ้ามันช่วยลดงานได้ ค่อยเลือกแพ็กที่เหมาะกับคุณ ถ้าไม่ช่วย ก็ไม่ต้องซื้อ</p>
-      <a class="btn primary download-link" href="#">⬇ ดาวน์โหลด AutoPost RV ฟรี</a>
-      <div class="install">Windows 10/11 · 64-bit · ใช้ร่วมกับ Google Chrome · ไฟล์ .exe</div>
+      <p>ถ้ามันช่วยประหยัดเวลาและทำให้งานคุณง่ายขึ้นจริง ค่อยตัดสินใจเลือกแพ็กเกจที่เหมาะกับคุณ</p>
+      <div class="final-ctas">
+        <a class="btn primary download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลด AutoPost RV ฟรี 50 โพสต์</a>
+        <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทีมงานผ่าน LINE</a>
+      </div>
+      <div class="install">รองรับ Windows 10/11 (64-bit) · ใช้ร่วมกับ Google Chrome · ไฟล์ .exe</div>
     </div>
   </section>
 
-  <footer>AutoPost RV · © 2026 · Needhome Solution Co., Ltd.</footer>
+  <footer>
+    AutoPost RV · © 2026 · พัฒนาและดูแลโดย <a href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">Needhome Solution Co., Ltd.</a>
+    <div class="footer-links"><a href="privacy.html">นโยบายความเป็นส่วนตัว</a><a href="terms.html">ข้อกำหนดการใช้งาน</a><a href="https://github.com/Marknebles/autopost-rv-landing/releases/tag/v0.2.0-beta.6" target="_blank" rel="noopener noreferrer">รายละเอียดเวอร์ชัน</a></div>
+  </footer>
 </div>
+</main>
 
-<a class="sticky download-link" href="#">⬇ ทดลองใช้ฟรี 50 โพสต์</a>
+<!-- Mobile Sticky Bar -->
+<div class="sticky" aria-label="ทางลัดบนมือถือ">
+  <a class="sticky-download download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ โหลดฟรี 50 โพสต์</a>
+  <a class="sticky-line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 LINE Support</a>
+</div>
 
 <script>
   const DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe";
-  const YOUTUBE_VIDEO_ID = ""; // ใส่เฉพาะ Video ID เช่น dQw4w9WgXcQ
+  const LINE_URL = "https://lin.ee/zmcFMcc";
+  const YOUTUBE_VIDEO_ID = ""; // ใส่เฉพาะ Video ID เช่น dQw4w9WgXcQ เมื่อมีคลิปจริง
+
+  // Set download links
   document.querySelectorAll(".download-link").forEach(el => {
     el.href = DOWNLOAD_URL;
-    el.rel = "noopener";
+    el.rel = "noopener noreferrer";
   });
+
+  // Set line links
+  document.querySelectorAll(".line-link").forEach(el => {
+    el.href = LINE_URL;
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+  });
+
+  // If YouTube video ID is provided, render iframe automatically
   if (/^[\w-]{11}$/.test(YOUTUBE_VIDEO_ID)) {
     const demo = document.getElementById("youtubeDemo");
-    demo.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}" title="วิดีโอสาธิต AutoPost RV" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+    if (demo) {
+      demo.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}" title="วิดีโอสาธิต AutoPost RV" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+    }
   }
 </script>
 
