@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม</title>
-  <meta name="description" content="AutoPost RV ซอฟต์แวร์ช่วยจัดการและโพสต์ประกาศเข้า Facebook Group หลายกลุ่มอัตโนมัติจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta name="description" content="AutoPost RV ซอฟต์แวร์ช่วยจัดการและโพสต์ประกาศเข้า Facebook Group หลายกลุ่มอัตโนมัติจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows และ macOS Apple Silicon" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="theme-color" content="#1677ff" />
   <link rel="canonical" href="https://marknebles.github.io/autopost-rv-landing/" />
@@ -14,7 +14,7 @@
   <meta property="og:locale" content="th_TH" />
   <meta property="og:site_name" content="AutoPost RV" />
   <meta property="og:title" content="AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม" />
-  <meta property="og:description" content="จัดการร่าง กลุ่มเป้าหมาย รูปและวิดีโอจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta property="og:description" content="จัดการร่าง กลุ่มเป้าหมาย รูปและวิดีโอจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows และ macOS Apple Silicon" />
   <meta property="og:url" content="https://marknebles.github.io/autopost-rv-landing/" />
   <meta property="og:image" content="https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png" />
   <meta property="og:image:width" content="1600" />
@@ -22,7 +22,7 @@
   <meta property="og:image:alt" content="หน้าจอจริงของ AutoPost RV V2" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AutoPost RV — ลดงานโพสต์ Facebook Group ซ้ำ" />
-  <meta name="twitter:description" content="ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows 10/11" />
+  <meta name="twitter:description" content="ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows และ macOS Apple Silicon" />
   <meta name="twitter:image" content="https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,11 +33,14 @@
     "@type": "SoftwareApplication",
     "name": "AutoPost RV V2",
     "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Windows 10, Windows 11",
+    "operatingSystem": "Windows 10, Windows 11, macOS Apple Silicon",
     "softwareVersion": "0.2.0-beta.6",
     "description": "โปรแกรมช่วยจัดการร่าง กลุ่มเป้าหมาย รูป วิดีโอ และประวัติการโพสต์ Facebook Group จากเครื่องของผู้ใช้",
     "image": "https://marknebles.github.io/autopost-rv-landing/assets/autopost-v2-dashboard.png",
-    "downloadUrl": "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe",
+    "downloadUrl": [
+      "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe",
+      "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg"
+    ],
     "publisher": {"@type": "Organization", "name": "Needhome Solution Co., Ltd."},
     "offers": {"@type": "Offer", "price": "0", "priceCurrency": "THB", "description": "ทดลองใช้ฟรี 50 โพสต์"}
   }
@@ -185,6 +188,13 @@
     .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(22,119,255,.30)}
     .btn.secondary{background:#fff;color:var(--ink)}
     .btn.secondary:hover{background:#f4f7fb}
+    .btn.mac{
+      color:#fff;
+      background:#111827;
+      border-color:#111827;
+      box-shadow:0 10px 24px rgba(17,24,39,.18);
+    }
+    .btn.mac:hover{background:#253044;transform:translateY(-2px)}
     .btn.line{
       background:var(--line-green);
       color:#fff;
@@ -562,6 +572,20 @@
       box-shadow:var(--shadow2);
       margin-top:20px;
     }
+    .platform-downloads{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:22px}
+    .platform-card{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:20px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fbfdff;
+    }
+    .platform-card h3{margin:0;font:700 20px var(--display)}
+    .platform-card p{margin:0;color:var(--muted);font-size:13px}
+    .platform-card .btn{margin-top:auto;width:100%}
+    .platform-meta{font-size:11.5px;color:#75859b}
     .install-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .inst-step{
       background:#fbfdff;
@@ -593,6 +617,8 @@
       font-size:12px;
       color:#7d5600;
     }
+    .gatekeeper-tip{margin-top:8px;padding:8px 10px;background:#fff8e7;border:1px solid #f2dfb3;border-radius:8px;color:#7d5600;font-size:11px;line-height:1.5}
+    .gatekeeper-tip code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
 
     /* Pricing */
     .pricing-banner{
@@ -636,6 +662,8 @@
     .price small{font:400 13px var(--body);color:var(--muted)}
     .price-note{font-size:12px;color:var(--green);margin:0 0 16px;font-weight:600}
     .price-card .btn{margin-top:auto;width:100%}
+    .price-downloads{display:grid;gap:8px;margin-top:auto}
+    .price-downloads .btn{margin-top:0}
     .btn.ghost{background:#f7f9fc;border-color:var(--line);color:var(--ink)}
     .btn.ghost:hover{background:#edf2f8}
     .pricing-footer-note{
@@ -696,6 +724,7 @@
       .navcta{padding:9px 12px;font-size:12px;white-space:nowrap}
       .hero{padding:40px 0 50px}
       .pricing{grid-template-columns:1fr}
+      .platform-downloads{grid-template-columns:1fr}
       .beforeafter,.trustitems{grid-template-columns:1fr}
       .price-card.featured{transform:none}
       section{padding:54px 0}
@@ -767,7 +796,7 @@
       <a href="#pricing">ราคา</a>
       <a href="#faq">FAQ</a>
       <a class="nav-line-btn line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 LINE Support</a>
-      <a class="navcta download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">ทดลองใช้ฟรี 50 โพสต์</a>
+      <a class="navcta" href="#download">ดาวน์โหลด</a>
     </div>
   </nav>
 
@@ -778,17 +807,18 @@
       <p class="lead">ลดเวลางานโพสต์ซ้ำ แล้วเอาเวลาไปคุยกับลูกค้าและปิดการขาย</p>
       <p class="sub">AutoPost RV ช่วยจัดการร่างประกาศ เลือกกลุ่มเป้าหมาย และกระจายโพสต์จากโปรแกรมเดียว พร้อมตัวเลือกหน่วงเวลา คำเตือนความเสี่ยง และประวัติลิงก์โพสต์จริงให้ตรวจย้อนหลังได้</p>
       <div class="ctas">
-        <a class="btn primary download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลดทดลองใช้ฟรี 50 โพสต์</a>
+        <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⊞ ดาวน์โหลด Windows</a>
+        <a class="btn mac mac-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg">● ดาวน์โหลด macOS</a>
         <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทาง LINE</a>
       </div>
       <div class="micro">
         <span><b>เริ่มฟรีก่อน</b></span>
         <span>·</span>
-        <span>Windows 10/11 (64-bit)</span>
+        <span>Windows 10/11 (64-bit) และ macOS Apple Silicon</span>
         <span>·</span>
         <span>รันผ่าน Google Chrome ในเครื่องคุณ</span>
       </div>
-      <div class="release-proof">เวอร์ชัน 0.2.0-beta.6 · เผยแพร่ผ่าน GitHub Releases · SHA-256 <code title="c658d76ba5f8585b994d2beabefea41d44944db6f47dbdfd6e7d8a212977a2e5">c658d76b…977a2e5</code></div>
+      <div class="release-proof">เวอร์ชัน 0.2.0-beta.6 · GitHub Releases · Windows SHA-256 <code title="c658d76ba5f8585b994d2beabefea41d44944db6f47dbdfd6e7d8a212977a2e5">c658d76b…977a2e5</code> · macOS <code title="dafcebf72ac43e52b59add15c3f85378323b1815e4d1e80086cac1b370aa195c">dafcebf7…0aa195c</code></div>
     </div>
 
     <div class="product-shell" aria-label="ภาพหน้าจอจริงของ AutoPost RV V2">
@@ -1054,24 +1084,40 @@
   </section>
 
   <!-- Easy Installation Guide -->
-  <section>
+  <section id="download">
     <div class="section-head">
       <div class="kicker">เริ่มต้นง่ายใน 3 ขั้นตอน</div>
       <h2>วิธีติดตั้งและเริ่มทดลองใช้งานฟรี</h2>
+      <p>เลือกไฟล์ให้ตรงกับระบบปฏิบัติการของเครื่องคุณ</p>
     </div>
 
     <div class="install-guide">
+      <div class="platform-downloads">
+        <div class="platform-card">
+          <h3>⊞ Windows</h3>
+          <p>สำหรับ Windows 10/11 แบบ 64-bit · ไฟล์ .exe</p>
+          <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">ดาวน์โหลดสำหรับ Windows</a>
+          <div class="platform-meta">SHA-256: c658d76b…977a2e5</div>
+        </div>
+        <div class="platform-card">
+          <h3>● macOS</h3>
+          <p>สำหรับ Mac Apple Silicon (M1/M2/M3/M4) · ไฟล์ .dmg</p>
+          <a class="btn mac mac-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg">ดาวน์โหลดสำหรับ macOS</a>
+          <div class="platform-meta">SHA-256: dafcebf7…0aa195c · ยังไม่รองรับ Intel Mac</div>
+          <div class="gatekeeper-tip"><b>Beta แบบ unsigned:</b> macOS อาจบล็อกการเปิดครั้งแรก ดูขั้นตอน Gatekeeper ใน FAQ ด้านล่าง</div>
+        </div>
+      </div>
       <div class="install-steps">
         <div class="inst-step">
           <span class="inst-step-num">1</span>
-          <h4>ดาวน์โหลดไฟล์ .exe</h4>
-          <p>ดาวน์โหลดไฟล์จาก GitHub Releases ทางการของ AutoPost RV สำหรับ Windows 10/11</p>
+          <h4>เลือกไฟล์ให้ตรงกับเครื่อง</h4>
+          <p>Windows ใช้ไฟล์ .exe ส่วน Mac Apple Silicon ใช้ไฟล์ .dmg จาก GitHub Release ทางการ</p>
         </div>
 
         <div class="inst-step">
           <span class="inst-step-num">2</span>
           <h4>เปิดไฟล์ติดตั้ง</h4>
-          <p>ดับเบิลคลิกไฟล์ที่ดาวน์โหลดมา เพื่อเปิดโปรแกรม</p>
+          <p>Windows ดับเบิลคลิก .exe ส่วน macOS เปิด .dmg แล้วลากแอปไปที่ Applications</p>
           <div class="smartscreen-tip">
             💡 <b>หาก Windows ขึ้นเตือน SmartScreen:</b> ตรวจชื่อไฟล์ว่าเป็น beta.6 จากลิงก์ทางการและตรวจ SHA-256 ด้านบนก่อน จากนั้นจึงเลือก <u>More info</u> และ <u>Run anyway</u>
           </div>
@@ -1105,7 +1151,10 @@
         <div class="use">ลองกับงานจริงก่อนตัดสินใจ</div>
         <div class="price">ฟรี</div>
         <div class="price-note">ไม่ต้องใส่บัตรเครดิต</div>
-        <a class="btn ghost download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลดฟรี</a>
+        <div class="price-downloads">
+          <a class="btn ghost windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⊞ Windows</a>
+          <a class="btn mac mac-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg">● macOS</a>
+        </div>
       </div>
 
       <div class="price-card">
@@ -1167,7 +1216,12 @@
 
       <details>
         <summary>รองรับระบบปฏิบัติการใดบ้าง?</summary>
-        <p>ปัจจุบันรองรับระบบปฏิบัติการ Windows 10 และ Windows 11 แบบ 64-bit และต้องมี Google Chrome ติดตั้งอยู่ในเครื่องคอมพิวเตอร์ครับ</p>
+        <p>รองรับ Windows 10/11 แบบ 64-bit และ macOS สำหรับ Mac ชิป Apple Silicon (M1/M2/M3/M4) โดยทั้งสองระบบต้องมี Google Chrome ติดตั้งอยู่ในเครื่อง ปัจจุบันยังไม่มีตัวติดตั้งสำหรับ Intel Mac ครับ</p>
+      </details>
+
+      <details>
+        <summary>macOS แจ้งว่าไม่สามารถเปิดแอปได้ ต้องทำอย่างไร?</summary>
+        <p>macOS beta.6 ยังเป็น unsigned build สำหรับทดสอบ หลังลากแอปไปที่ Applications ให้เปิด Terminal แล้วรัน <code>xattr -cr "/Applications/AutoPost RV V2.app"</code> จากนั้นเปิดโปรแกรมอีกครั้ง การแจ้งเตือนนี้มาจาก Gatekeeper และไม่ได้หมายความว่าไฟล์ดาวน์โหลดเสียหายครับ</p>
       </details>
 
       <details>
@@ -1189,10 +1243,11 @@
       <h2>อย่าเพิ่งซื้อ — ลองกับงานจริงก่อน 50 โพสต์</h2>
       <p>ถ้ามันช่วยประหยัดเวลาและทำให้งานคุณง่ายขึ้นจริง ค่อยตัดสินใจเลือกแพ็กเกจที่เหมาะกับคุณ</p>
       <div class="final-ctas">
-        <a class="btn primary download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ ดาวน์โหลด AutoPost RV ฟรี 50 โพสต์</a>
+        <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⊞ ดาวน์โหลด Windows</a>
+        <a class="btn mac mac-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg">● ดาวน์โหลด macOS</a>
         <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทีมงานผ่าน LINE</a>
       </div>
-      <div class="install">รองรับ Windows 10/11 (64-bit) · ใช้ร่วมกับ Google Chrome · ไฟล์ .exe</div>
+      <div class="install">รองรับ Windows 10/11 (64-bit) และ macOS Apple Silicon · ใช้ร่วมกับ Google Chrome</div>
     </div>
   </section>
 
@@ -1205,18 +1260,23 @@
 
 <!-- Mobile Sticky Bar -->
 <div class="sticky" aria-label="ทางลัดบนมือถือ">
-  <a class="sticky-download download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe">⬇ โหลดฟรี 50 โพสต์</a>
+  <a class="sticky-download" href="#download">⬇ เลือกดาวน์โหลด</a>
   <a class="sticky-line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 LINE Support</a>
 </div>
 
 <script>
-  const DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe";
+  const WINDOWS_DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-x64.exe";
+  const MACOS_DOWNLOAD_URL = "https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-V2-0.2.0-beta.6-macOS-arm64.dmg";
   const LINE_URL = "https://lin.ee/zmcFMcc";
   const YOUTUBE_VIDEO_ID = ""; // ใส่เฉพาะ Video ID เช่น dQw4w9WgXcQ เมื่อมีคลิปจริง
 
-  // Set download links
-  document.querySelectorAll(".download-link").forEach(el => {
-    el.href = DOWNLOAD_URL;
+  // Set platform download links while keeping hardcoded hrefs as a no-JavaScript fallback.
+  document.querySelectorAll(".windows-download-link").forEach(el => {
+    el.href = WINDOWS_DOWNLOAD_URL;
+    el.rel = "noopener noreferrer";
+  });
+  document.querySelectorAll(".mac-download-link").forEach(el => {
+    el.href = MACOS_DOWNLOAD_URL;
     el.rel = "noopener noreferrer";
   });
 
