@@ -6,7 +6,7 @@
   <title>AutoPost RV — โพสต์หลายกลุ่ม ไม่ต้องทำซ้ำทีละกลุ่ม</title>
   <meta name="description" content="AutoPost RV ซอฟต์แวร์ช่วยจัดการและโพสต์ประกาศเข้า Facebook Group หลายกลุ่มอัตโนมัติจากโปรแกรมเดียว ทดลองใช้ฟรี 50 โพสต์ สำหรับ Windows และ macOS" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta name="theme-color" content="#1677ff" />
+  <meta name="theme-color" content="#071426" />
   <link rel="canonical" href="https://marknebles.github.io/autopost-rv-landing/" />
   <link rel="icon" type="image/png" sizes="512x512" href="logo.png" />
   <link rel="apple-touch-icon" href="logo.png" />
@@ -48,24 +48,24 @@
   </script>
   <style>
     :root{
-      --bg:#f7f9fc;
-      --paper:#ffffff;
-      --ink:#10213a;
-      --muted:#65758d;
-      --line:#e6ebf2;
-      --blue:#1677ff;
-      --blue2:#0b5fd7;
-      --blueSoft:#eef6ff;
-      --green:#16a66a;
-      --greenSoft:#edf9f4;
+      --bg:#06101f;
+      --paper:#0d1b2f;
+      --ink:#f4f7fc;
+      --muted:#9aabc2;
+      --line:#203550;
+      --blue:#2f8cff;
+      --blue2:#146de6;
+      --blueSoft:#102d55;
+      --green:#47d99a;
+      --greenSoft:#0c3026;
       --line-green:#06c755;
       --line-green-dark:#05b04b;
-      --amber:#b77a00;
-      --amberSoft:#fff8e7;
-      --red:#e03131;
-      --redSoft:#fff5f5;
-      --shadow:0 20px 50px rgba(16,33,58,.08);
-      --shadow2:0 10px 28px rgba(16,33,58,.07);
+      --amber:#f4b84e;
+      --amberSoft:#352810;
+      --red:#ff7777;
+      --redSoft:#381d24;
+      --shadow:0 20px 54px rgba(0,0,0,.34);
+      --shadow2:0 10px 30px rgba(0,0,0,.24);
       --max:1180px;
       --display:"Anuphan","IBM Plex Sans Thai",system-ui,sans-serif;
       --body:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
@@ -78,8 +78,9 @@
       margin:0;
       color:var(--ink);
       background:
-        radial-gradient(800px 420px at 85% -5%, rgba(22,119,255,.10), transparent 60%),
-        linear-gradient(180deg,#fbfdff 0,#f7f9fc 100%);
+        radial-gradient(900px 520px at 85% -5%, rgba(47,140,255,.20), transparent 62%),
+        radial-gradient(700px 480px at 0% 38%, rgba(16,66,126,.18), transparent 68%),
+        linear-gradient(180deg,#071426 0%,#06101f 100%);
       font-family:var(--body);
       line-height:1.65;
     }
@@ -612,6 +613,9 @@
       background:#fbfdff;
     }
     .platform-card h3{margin:0;font:700 20px var(--display)}
+    .platform-heading{display:flex;align-items:center;gap:10px}
+    .platform-logo{display:inline-block;width:22px;height:22px;object-fit:contain;flex:0 0 auto}
+    .btn .platform-logo{width:18px;height:18px}
     .platform-card p{margin:0;color:var(--muted);font-size:13px}
     .platform-card .btn{width:100%}
     .platform-actions{display:grid;gap:8px}
@@ -734,6 +738,64 @@
     footer{text-align:center;color:#8493a8;padding:36px 0 50px;font-size:12.5px}
     footer a{color:var(--blue);text-decoration:none}
     .footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:8px}
+    .trademark-note{max-width:820px;margin:14px auto 0;color:#657991;font-size:10.5px;line-height:1.55}
+
+    /* Dark navy theme */
+    .skip-link,
+    .product-shell,
+    .trustbar,
+    .ba,
+    .card,
+    .comparison-wrapper,
+    .guideline-container,
+    .rule-card,
+    .trust-box,
+    .review-box,
+    .company,
+    .review,
+    .install-guide,
+    .platform-card,
+    .inst-step,
+    .price-card,
+    details{background:var(--paper)}
+    .skip-link{color:var(--ink)}
+    .nav-line-btn{background:#0b3025;border-color:#175438}
+    .nav-line-btn:hover{background:#10432f}
+    .eyebrow{border-color:#175438}
+    .btn.secondary,.btn.ghost{background:#13243b;color:var(--ink);border-color:#29415f}
+    .btn.secondary:hover,.btn.ghost:hover{background:#1a304d}
+    .btn.mac{background:#050b14;border-color:#30445f;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+    .btn.mac:hover{background:#111f33}
+    .release-proof{color:#8295af}
+    .windowbar{background:#091729}
+    .dot{background:#40526b}
+    .windowtitle{color:#91a3ba}
+    .product-shot{background:#0a1627}
+    .ba.before{border-top-color:#56677f}
+    .ba.after{background:linear-gradient(180deg,#0d1b2f 0%,#0e213a 100%)}
+    .badge-pill.gray{background:#1a2a41;color:#aab8ca}
+    .timeitem{border-bottom-color:#1b304a}
+    .comp-table th{background:#0b1728}
+    .comp-table th.rv-col{background:#102847}
+    .comp-table td.feature-col,.comp-table td.other-col{background:#0b1829;color:var(--ink)}
+    .comp-table td.other-col{color:#a4b3c7}
+    .comp-table td.rv-col{background:#0e2139;color:#dceaff}
+    .guideline-container{border-color:#244c76;background:linear-gradient(180deg,#0d1b2f 0%,#0b192b 100%)}
+    .guideline-intro{background:#102847}
+    .company-logo{background:#102d55}
+    .line-support-card{background:#0b3025;border-color:#175438}
+    .line-support-card .text{color:#9ce8bf}
+    .line-support-card .text b{color:#d9ffea}
+    .review-quote{color:#c5d1e0}
+    .smart-download-panel{border-color:#275789;background:linear-gradient(135deg,#102744 0%,#0d213b 100%)}
+    .smart-download-copy h3{color:var(--ink)}
+    .device-badge{background:#0a192b;border-color:#294d75;color:#b9d8ff}
+    .smart-download-status,.manual-download-title,.platform-meta{color:#91a4bd}
+    .smartscreen-tip,.gatekeeper-tip{background:#352810;border-color:#6b5120;color:#f5d58f}
+    .pricing-banner{background:#102847;border-color:#275789;color:#cfe4ff}
+    .price-card.featured{background:linear-gradient(180deg,#10213a 0%,#0d1b2f 100%)}
+    details[open]{background:#10213a;border-color:#315276}
+    .final{background:linear-gradient(135deg,#0a1b32,#133765);border:1px solid #22496f}
 
     .sticky{display:none}
 
@@ -1137,17 +1199,17 @@
       <div class="manual-download-title">หรือเลือกไฟล์ติดตั้งด้วยตัวเอง</div>
       <div class="platform-downloads" id="manualDownloads">
         <div class="platform-card">
-          <h3>⊞ Windows</h3>
+          <h3 class="platform-heading"><img class="platform-logo" src="assets/windows.svg" alt="" aria-hidden="true">Windows</h3>
           <p>สำหรับ Windows 10/11 แบบ 64-bit · ไฟล์ .exe</p>
-          <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe">ดาวน์โหลดสำหรับ Windows</a>
+          <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe"><img class="platform-logo" src="assets/windows.svg" alt="" aria-hidden="true">ดาวน์โหลดสำหรับ Windows</a>
           <div class="platform-meta">ชื่อไฟล์: AutoPost-RV-Windows-Setup.exe</div>
         </div>
         <div class="platform-card" id="macDownloadChoices">
-          <h3>● macOS</h3>
+          <h3 class="platform-heading"><img class="platform-logo" src="assets/apple.svg" alt="" aria-hidden="true">macOS</h3>
           <p>เลือกตัวติดตั้งให้ตรงกับชิปของ Mac · ไฟล์ .dmg</p>
           <div class="platform-actions">
-            <a class="btn mac mac-arm-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-macOS-Apple-Silicon.dmg">Apple Silicon (M1/M2/M3/M4)</a>
-            <a class="btn secondary mac-intel-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-macOS-Intel.dmg">Intel Mac</a>
+            <a class="btn mac mac-arm-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-macOS-Apple-Silicon.dmg"><img class="platform-logo" src="assets/apple.svg" alt="" aria-hidden="true">Apple Silicon (M1/M2/M3/M4)</a>
+            <a class="btn secondary mac-intel-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-macOS-Intel.dmg"><img class="platform-logo" src="assets/apple.svg" alt="" aria-hidden="true">Intel Mac</a>
           </div>
           <div class="platform-meta">ตรวจได้จากเมนู Apple  → About This Mac → Chip / Processor</div>
           <div class="gatekeeper-tip"><b>ตัวติดตั้ง macOS แบบ unsigned:</b> macOS อาจบล็อกการเปิดครั้งแรก ดูขั้นตอน Gatekeeper ใน FAQ ด้านล่าง</div>
@@ -1298,6 +1360,7 @@
   <footer>
     AutoPost RV · © 2026 · พัฒนาและดูแลโดย <a href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">Needhome Solution Co., Ltd.</a>
     <div class="footer-links"><a href="privacy.html">นโยบายความเป็นส่วนตัว</a><a href="terms.html">ข้อกำหนดการใช้งาน</a><a href="https://github.com/Marknebles/autopost-rv-landing/releases/tag/v0.2.0-beta.6" target="_blank" rel="noopener noreferrer">รายละเอียดเวอร์ชัน</a></div>
+    <div class="trademark-note">Windows เป็นเครื่องหมายการค้าของ Microsoft Corporation ส่วน Apple, โลโก้ Apple และ macOS เป็นเครื่องหมายการค้าของ Apple Inc. เจ้าของเครื่องหมายไม่ได้เป็นผู้สนับสนุนหรือรับรอง AutoPost RV</div>
   </footer>
 </div>
 </main>
@@ -1333,12 +1396,21 @@
   const detectedDevice = document.getElementById("detectedDevice");
   const smartDownloadStatus = document.getElementById("smartDownloadStatus");
 
-  function setSmartDownload({ label, status, url, targetId }) {
+  function setSmartDownload({ label, status, url, targetId, platformIcon }) {
     if (!smartDownloadLinks.length || !detectedDevice || !smartDownloadStatus) return;
 
     detectedDevice.textContent = status;
     smartDownloadLinks.forEach(link => {
-      link.textContent = label;
+      link.replaceChildren();
+      if (platformIcon) {
+        const icon = document.createElement("img");
+        icon.className = "platform-logo";
+        icon.src = `assets/${platformIcon}.svg`;
+        icon.alt = "";
+        icon.setAttribute("aria-hidden", "true");
+        link.append(icon);
+      }
+      link.append(document.createTextNode(label));
       link.removeAttribute("aria-disabled");
 
       if (url) {
@@ -1387,15 +1459,17 @@
         setSmartDownload({
           label: "ดูตัวเลือกดาวน์โหลด",
           status: "ตรวจพบ Windows 32-bit · โปรแกรมรองรับ 64-bit เท่านั้น",
-          targetId: "manualDownloads"
+          targetId: "manualDownloads",
+          platformIcon: "windows"
         });
         return;
       }
 
       setSmartDownload({
-        label: "⊞ ดาวน์โหลดสำหรับ Windows",
+        label: "ดาวน์โหลดสำหรับ Windows",
         status: "ตรวจพบ Windows · ตัวติดตั้ง 64-bit",
-        url: WINDOWS_DOWNLOAD_URL
+        url: WINDOWS_DOWNLOAD_URL,
+        platformIcon: "windows"
       });
       return;
     }
@@ -1403,18 +1477,20 @@
     if (isMac) {
       if (architecture === "arm") {
         setSmartDownload({
-          label: "● ดาวน์โหลดสำหรับ Apple Silicon",
+          label: "ดาวน์โหลดสำหรับ Apple Silicon",
           status: "ตรวจพบ macOS · ชิป Apple Silicon",
-          url: MACOS_ARM_DOWNLOAD_URL
+          url: MACOS_ARM_DOWNLOAD_URL,
+          platformIcon: "apple"
         });
         return;
       }
 
       if (architecture === "x86") {
         setSmartDownload({
-          label: "● ดาวน์โหลดสำหรับ Intel Mac",
+          label: "ดาวน์โหลดสำหรับ Intel Mac",
           status: "ตรวจพบ macOS · ชิป Intel",
-          url: MACOS_INTEL_DOWNLOAD_URL
+          url: MACOS_INTEL_DOWNLOAD_URL,
+          platformIcon: "apple"
         });
         return;
       }
@@ -1422,7 +1498,8 @@
       setSmartDownload({
         label: "เลือกชิป Mac ของคุณ",
         status: "ตรวจพบ macOS · ยังระบุรุ่นชิปไม่ได้",
-        targetId: "macDownloadChoices"
+        targetId: "macDownloadChoices",
+        platformIcon: "apple"
       });
       return;
     }
