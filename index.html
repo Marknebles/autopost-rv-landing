@@ -572,7 +572,36 @@
       box-shadow:var(--shadow2);
       margin-top:20px;
     }
-    .platform-downloads{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:22px}
+    .smart-download-panel{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,420px);
+      align-items:center;
+      gap:24px;
+      padding:24px;
+      margin-bottom:22px;
+      border:1px solid #bfd7ff;
+      border-radius:18px;
+      background:linear-gradient(135deg,#f4f8ff 0%,#eef8ff 100%);
+    }
+    .smart-download-copy h3{margin:7px 0 4px;font:700 22px var(--display);color:#10233f}
+    .smart-download-copy p{margin:0;color:var(--muted);font-size:13px}
+    .device-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:5px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #d8e6fb;
+      color:#31557f;
+      font-size:11.5px;
+      font-weight:700;
+    }
+    .smart-download-action{display:grid;gap:7px}
+    .smart-download-action .btn{width:100%}
+    .smart-download-status{color:#61758f;font-size:11.5px;text-align:center}
+    .manual-download-title{margin:0 0 12px;color:#50647e;font-size:12px;font-weight:700}
+    .platform-downloads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px;margin-bottom:22px}
     .platform-card{
       display:flex;
       flex-direction:column;
@@ -584,9 +613,8 @@
     }
     .platform-card h3{margin:0;font:700 20px var(--display)}
     .platform-card p{margin:0;color:var(--muted);font-size:13px}
-    .platform-card .btn{margin-top:auto;width:100%}
-    .platform-actions{display:grid;gap:8px;margin-top:auto}
-    .platform-actions .btn{margin-top:0}
+    .platform-card .btn{width:100%}
+    .platform-actions{display:grid;gap:8px}
     .platform-meta{font-size:11.5px;color:#75859b}
     .install-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .inst-step{
@@ -726,6 +754,7 @@
       .navcta{padding:9px 12px;font-size:12px;white-space:nowrap}
       .hero{padding:40px 0 50px}
       .pricing{grid-template-columns:1fr}
+      .smart-download-panel{grid-template-columns:1fr;padding:20px;gap:16px}
       .platform-downloads{grid-template-columns:1fr}
       .beforeafter,.trustitems{grid-template-columns:1fr}
       .price-card.featured{transform:none}
@@ -809,8 +838,7 @@
       <p class="lead">ลดเวลางานโพสต์ซ้ำ แล้วเอาเวลาไปคุยกับลูกค้าและปิดการขาย</p>
       <p class="sub">AutoPost RV ช่วยจัดการร่างประกาศ เลือกกลุ่มเป้าหมาย และกระจายโพสต์จากโปรแกรมเดียว พร้อมตัวเลือกหน่วงเวลา คำเตือนความเสี่ยง และประวัติลิงก์โพสต์จริงให้ตรวจย้อนหลังได้</p>
       <div class="ctas">
-        <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe">⊞ ดาวน์โหลด Windows</a>
-        <a class="btn mac" href="#download">● เลือกดาวน์โหลด macOS</a>
+        <a class="btn primary smart-download-link" href="#download">ดาวน์โหลดสำหรับเครื่องนี้</a>
         <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทาง LINE</a>
       </div>
       <div class="micro">
@@ -1094,14 +1122,27 @@
     </div>
 
     <div class="install-guide">
-      <div class="platform-downloads">
+      <div class="smart-download-panel" aria-live="polite">
+        <div class="smart-download-copy">
+          <span class="device-badge" id="detectedDevice">กำลังตรวจสอบเครื่อง…</span>
+          <h3>ดาวน์โหลดตัวติดตั้งที่เหมาะกับเครื่องนี้</h3>
+          <p>ตรวจเฉพาะในเบราว์เซอร์ของคุณ ข้อมูลเครื่องจะไม่ถูกส่งออกจากอุปกรณ์</p>
+        </div>
+        <div class="smart-download-action">
+          <a class="btn primary smart-download-link" id="smartDownloadButton" href="#manualDownloads" aria-disabled="true">กำลังเลือกไฟล์ที่เหมาะสม…</a>
+          <div class="smart-download-status" id="smartDownloadStatus">หากตรวจรุ่นชิปไม่ได้ ระบบจะให้คุณเลือกเอง</div>
+        </div>
+      </div>
+
+      <div class="manual-download-title">หรือเลือกไฟล์ติดตั้งด้วยตัวเอง</div>
+      <div class="platform-downloads" id="manualDownloads">
         <div class="platform-card">
           <h3>⊞ Windows</h3>
           <p>สำหรับ Windows 10/11 แบบ 64-bit · ไฟล์ .exe</p>
           <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe">ดาวน์โหลดสำหรับ Windows</a>
           <div class="platform-meta">ชื่อไฟล์: AutoPost-RV-Windows-Setup.exe</div>
         </div>
-        <div class="platform-card">
+        <div class="platform-card" id="macDownloadChoices">
           <h3>● macOS</h3>
           <p>เลือกตัวติดตั้งให้ตรงกับชิปของ Mac · ไฟล์ .dmg</p>
           <div class="platform-actions">
@@ -1157,8 +1198,7 @@
         <div class="price">ฟรี</div>
         <div class="price-note">ไม่ต้องใส่บัตรเครดิต</div>
         <div class="price-downloads">
-          <a class="btn ghost windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe">⊞ Windows</a>
-          <a class="btn mac" href="#download">● เลือก macOS</a>
+          <a class="btn ghost smart-download-link" href="#download">ดาวน์โหลดสำหรับเครื่องนี้</a>
         </div>
       </div>
 
@@ -1248,8 +1288,7 @@
       <h2>อย่าเพิ่งซื้อ — ลองกับงานจริงก่อน 50 โพสต์</h2>
       <p>ถ้ามันช่วยประหยัดเวลาและทำให้งานคุณง่ายขึ้นจริง ค่อยตัดสินใจเลือกแพ็กเกจที่เหมาะกับคุณ</p>
       <div class="final-ctas">
-        <a class="btn primary windows-download-link" href="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-Windows-Setup.exe">⊞ ดาวน์โหลด Windows</a>
-        <a class="btn mac" href="#download">● เลือกดาวน์โหลด macOS</a>
+        <a class="btn primary smart-download-link" href="#download">ดาวน์โหลดสำหรับเครื่องนี้</a>
         <a class="btn line line-link" href="https://lin.ee/zmcFMcc" target="_blank" rel="noopener noreferrer">💬 สอบถามทีมงานผ่าน LINE</a>
       </div>
       <div class="install">รองรับ Windows 10/11 (64-bit), Mac Apple Silicon และ Intel Mac · ใช้ร่วมกับ Google Chrome</div>
@@ -1289,6 +1328,113 @@
     el.href = MACOS_INTEL_DOWNLOAD_URL;
     el.rel = "noopener noreferrer";
   });
+
+  const smartDownloadLinks = document.querySelectorAll(".smart-download-link");
+  const detectedDevice = document.getElementById("detectedDevice");
+  const smartDownloadStatus = document.getElementById("smartDownloadStatus");
+
+  function setSmartDownload({ label, status, url, targetId }) {
+    if (!smartDownloadLinks.length || !detectedDevice || !smartDownloadStatus) return;
+
+    detectedDevice.textContent = status;
+    smartDownloadLinks.forEach(link => {
+      link.textContent = label;
+      link.removeAttribute("aria-disabled");
+
+      if (url) {
+        link.href = url;
+        link.rel = "noopener noreferrer";
+        link.onclick = null;
+      } else {
+        link.href = `#${targetId || "manualDownloads"}`;
+        link.onclick = event => {
+          event.preventDefault();
+          document.getElementById(targetId || "manualDownloads")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        };
+      }
+    });
+
+    smartDownloadStatus.textContent = url
+      ? "กดครั้งเดียวเพื่อเริ่มดาวน์โหลด · หากไม่ตรง สามารถเลือกเองด้านล่าง"
+      : "เบราว์เซอร์ระบุรุ่นเครื่องได้ไม่ครบ กรุณาเลือกไฟล์ด้านล่าง";
+  }
+
+  async function configureSmartDownload() {
+    const uaData = navigator.userAgentData;
+    const userAgent = navigator.userAgent || "";
+    const platform = uaData?.platform || navigator.platform || "";
+    let architecture = "";
+    let bitness = "";
+    let wow64 = false;
+
+    if (uaData?.getHighEntropyValues) {
+      try {
+        const hints = await uaData.getHighEntropyValues(["architecture", "bitness", "wow64"]);
+        architecture = String(hints.architecture || "").toLowerCase();
+        bitness = String(hints.bitness || "");
+        wow64 = hints.wow64 === true;
+      } catch (_) {
+        // Privacy settings and unsupported browsers may intentionally withhold these hints.
+      }
+    }
+
+    const isWindows = /windows/i.test(platform) || /windows/i.test(userAgent);
+    const isMac = /mac/i.test(platform) || /macintosh|mac os x/i.test(userAgent);
+
+    if (isWindows) {
+      const isKnown32Bit = bitness === "32" && !wow64 && !/wow64|win64|x64/i.test(userAgent);
+      if (isKnown32Bit) {
+        setSmartDownload({
+          label: "ดูตัวเลือกดาวน์โหลด",
+          status: "ตรวจพบ Windows 32-bit · โปรแกรมรองรับ 64-bit เท่านั้น",
+          targetId: "manualDownloads"
+        });
+        return;
+      }
+
+      setSmartDownload({
+        label: "⊞ ดาวน์โหลดสำหรับ Windows",
+        status: "ตรวจพบ Windows · ตัวติดตั้ง 64-bit",
+        url: WINDOWS_DOWNLOAD_URL
+      });
+      return;
+    }
+
+    if (isMac) {
+      if (architecture === "arm") {
+        setSmartDownload({
+          label: "● ดาวน์โหลดสำหรับ Apple Silicon",
+          status: "ตรวจพบ macOS · ชิป Apple Silicon",
+          url: MACOS_ARM_DOWNLOAD_URL
+        });
+        return;
+      }
+
+      if (architecture === "x86") {
+        setSmartDownload({
+          label: "● ดาวน์โหลดสำหรับ Intel Mac",
+          status: "ตรวจพบ macOS · ชิป Intel",
+          url: MACOS_INTEL_DOWNLOAD_URL
+        });
+        return;
+      }
+
+      setSmartDownload({
+        label: "เลือกชิป Mac ของคุณ",
+        status: "ตรวจพบ macOS · ยังระบุรุ่นชิปไม่ได้",
+        targetId: "macDownloadChoices"
+      });
+      return;
+    }
+
+    setSmartDownload({
+      label: "เลือกไฟล์ดาวน์โหลด",
+      status: "ยังไม่สามารถระบุระบบปฏิบัติการได้",
+      targetId: "manualDownloads"
+    });
+  }
+
+  configureSmartDownload();
 
   // Set line links
   document.querySelectorAll(".line-link").forEach(el => {
