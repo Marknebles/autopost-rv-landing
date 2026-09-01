@@ -1370,7 +1370,7 @@
 
       <details>
         <summary>macOS แจ้งว่าไม่สามารถเปิดแอปได้ ต้องทำอย่างไร?</summary>
-        <p>ตัวติดตั้ง macOS รุ่นปัจจุบันยังเป็น unsigned build สำหรับทดสอบ หลังลากแอปไปที่ Applications ให้เปิด Terminal แล้วรัน <code>xattr -cr "/Applications/AutoPost RV V2.app"</code> จากนั้นเปิดโปรแกรมอีกครั้ง การแจ้งเตือนนี้มาจาก Gatekeeper และไม่ได้หมายความว่าไฟล์ดาวน์โหลดเสียหายครับ</p>
+        <p>ตัวติดตั้ง macOS รุ่นปัจจุบันยังเป็น unsigned build สำหรับทดสอบ หลังลากแอปไปที่ Applications ให้เปิด Terminal แล้วรัน <code>sudo xattr -rd com.apple.quarantine "/Applications/AutoPost RV V2.app"</code> จากนั้นคลิกขวาที่แอป เลือก Open และกด Open อีกครั้ง การแจ้งเตือนนี้มาจาก Gatekeeper และไม่ได้หมายความว่าไฟล์ดาวน์โหลดเสียหายครับ</p>
       </details>
 
       <details>
