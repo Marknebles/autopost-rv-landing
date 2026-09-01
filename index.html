@@ -653,6 +653,25 @@
     }
     .gatekeeper-tip{margin-top:8px;padding:8px 10px;background:#fff8e7;border:1px solid #f2dfb3;border-radius:8px;color:#7d5600;font-size:11px;line-height:1.5}
     .gatekeeper-tip code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+    .mac-install-help{
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);
+      gap:22px;
+      margin:0 0 22px;
+      padding:22px;
+      border:1px solid #c9d9ee;
+      border-radius:18px;
+      background:linear-gradient(135deg,#f8fbff 0%,#f3f8ff 100%);
+    }
+    .mac-install-video{width:100%;aspect-ratio:16/9;display:block;border-radius:13px;background:#0b1527;box-shadow:0 12px 30px rgba(18,48,84,.14)}
+    .mac-install-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+    .mac-install-copy h3{margin:0 0 8px;font:700 20px var(--display);color:#10233f}
+    .mac-install-copy>p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.6}
+    .mac-install-list{margin:0 0 14px;padding-left:21px;color:#30435c;font-size:13px;line-height:1.65}
+    .gatekeeper-command{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+    .gatekeeper-command code{display:block;min-width:0;padding:10px 12px;border:1px solid #cad8ea;border-radius:9px;background:#fff;color:#17304f;font:600 11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+    .copy-command{border:1px solid #a9bed9;border-radius:9px;background:#fff;color:#164e91;padding:10px 12px;font:700 12px var(--body);cursor:pointer;white-space:nowrap}
+    .copy-command:hover{background:#edf5ff}
 
     /* Pricing */
     .pricing-banner{
@@ -821,6 +840,7 @@
       .pricing{grid-template-columns:1fr}
       .smart-download-panel{grid-template-columns:1fr;padding:20px;gap:16px}
       .platform-downloads{grid-template-columns:1fr}
+      .mac-install-help{grid-template-columns:1fr}
       .beforeafter,.trustitems{grid-template-columns:1fr}
       .price-card.featured{transform:none}
       section{padding:54px 0}
@@ -1218,6 +1238,25 @@
           <div class="gatekeeper-tip"><b>ตัวติดตั้ง macOS แบบ unsigned:</b> macOS อาจบล็อกการเปิดครั้งแรก ดูขั้นตอน Gatekeeper ใน FAQ ด้านล่าง</div>
         </div>
       </div>
+      <div class="mac-install-help" id="macInstallGuide">
+        <video class="mac-install-video" controls preload="metadata" poster="assets/mac-install-poster.png">
+          <source src="https://github.com/Marknebles/autopost-rv-landing/releases/download/v0.2.0-beta.6/AutoPost-RV-macOS-Install-Guide.mp4" type="video/mp4">
+          เบราว์เซอร์นี้ไม่รองรับวิดีโอ HTML5
+        </video>
+        <div class="mac-install-copy">
+          <h3>วิดีโอวิธีติดตั้งบน Mac</h3>
+          <p>ดูตั้งแต่ดาวน์โหลดไฟล์ ลากแอปเข้า Applications จนเปิดใช้งานครั้งแรก</p>
+          <ol class="mac-install-list">
+            <li>ดาวน์โหลด DMG ให้ตรงกับชิป แล้วลากแอปเข้า Applications</li>
+            <li>หาก macOS แจ้งว่าแอป “เสียหายและเปิดไม่ได้” ให้เปิด Terminal แล้วรันคำสั่งด้านล่าง</li>
+            <li>คลิกขวาที่แอป เลือก <b>Open</b> แล้วกด <b>Open</b> อีกครั้ง</li>
+          </ol>
+          <div class="gatekeeper-command">
+            <code id="gatekeeperCommand">sudo xattr -rd com.apple.quarantine &quot;/Applications/AutoPost RV V2.app&quot;</code>
+            <button class="copy-command" id="copyGatekeeperCommand" type="button">คัดลอกคำสั่ง</button>
+          </div>
+        </div>
+      </div>
       <div class="install-steps">
         <div class="inst-step">
           <span class="inst-step-num">1</span>
@@ -1515,6 +1554,18 @@
   }
 
   configureSmartDownload();
+
+  const copyGatekeeperCommand = document.getElementById("copyGatekeeperCommand");
+  copyGatekeeperCommand?.addEventListener("click", async () => {
+    const command = document.getElementById("gatekeeperCommand")?.textContent || "";
+    try {
+      await navigator.clipboard.writeText(command);
+      copyGatekeeperCommand.textContent = "คัดลอกแล้ว";
+      window.setTimeout(() => { copyGatekeeperCommand.textContent = "คัดลอกคำสั่ง"; }, 1800);
+    } catch (_) {
+      window.prompt("คัดลอกคำสั่งนี้", command);
+    }
+  });
 
   // Set line links
   document.querySelectorAll(".line-link").forEach(el => {
